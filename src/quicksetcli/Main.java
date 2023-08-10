@@ -46,7 +46,7 @@ public class Main {
 
             }
 
-            System.out.println("Good bye.");
+            System.out.println("Exiting, Good bye.");
 
         }
     }
@@ -61,95 +61,87 @@ public class Main {
 
     private static void displayOptions(Service service) throws SDKException {
 
-        // Define scanner object
         Scanner scanner = new Scanner(System.in);
 
-        // Show selection options
-        showOptions();
+        while(searchingStatus) {
 
-        // Define selection entry
-        String entry;
+            displayMainMenu();
+            int userChoice = getUserChoice(scanner, 1, 7);
 
-        do {
+            switch (userChoice) {
 
-            entry = scanner.nextLine();
+                case 1:
+                    System.out.println("Executing Check Request Ports workflow...");
+                    IProcessBehaviour portChecker = new PortChecker(service);
+                    portChecker.process();
+                    displayMainMenu();
+                    break;
 
-            if (!entry.isEmpty() && entry.trim().length() != 0) {
+                case 2:
+                    System.out.println("Executing Check Heap Size workflow...");
+                    IProcessBehaviour heapChecker = new HeapChecker(service);
+                    heapChecker.process();
+                    displayMainMenu();
+                    break;
 
-                    switch (entry) {
+                case 3:
+                    System.out.println("Executing Check License Key workflow...");
+                    IProcessBehaviour licenseCheckerV1 = new LicenseChecker(service);
+                    licenseCheckerV1.process();
+                    displayMainMenu();
+                    break;
 
-                        case "1":
-                            System.out.println("Executing Check Request Ports workflow...");
-                            IProcessBehaviour portChecker = new PortChecker(service);
-                            portChecker.process();
-                            showOptions();
-                            break;
+                case 4:
+                    System.out.println("Executing Check Services workflow...");
+                    IProcessBehaviour servicesChecker = new ServicesChecker(service);
+                    servicesChecker.process();
+                    displayMainMenu();
+                    break;
 
-                        case "2":
-                            System.out.println("Executing Check Heap Size workflow...");
-                            IProcessBehaviour heapChecker = new HeapChecker(service);
-                            heapChecker.process();
-                            showOptions();
-                            break;
+                case 5:
+                    System.out.println("Executing Users and Groups workflow...");
+                    IProcessBehaviour usersAndGroupsChecker = new UsersAndGroupsChecker(service);
+                    usersAndGroupsChecker.process();
+                    displayMainMenu();
+                    break;
 
-                        case "3":
-                            System.out.println("Executing Check License Key workflow...");
-                            IProcessBehaviour licenseCheckerV1 = new LicenseChecker(service);
-                            licenseCheckerV1.process();
-                            showOptions();
-                            break;
+                case 6:
+                    System.out.println();
+                    PortSetter portSetter = new PortSetter(service);
+                    portSetter.handleModifyRequestPortMenu(scanner);
+//                            portSetter.process();
+//                            showOptions();
+                    break;
 
-                        case "4":
-                            System.out.println("Executing Check Services workflow...");
-                            IProcessBehaviour servicesChecker = new ServicesChecker(service);
-                            servicesChecker.process();
-                            showOptions();
-                            break;
+                case 7:
+                    System.out.println();
+                    scanner.close();
+                    searchingStatus = false;
+                    break;
 
-                        case "5":
-                            System.out.println("Executing Users and Groups workflow...");
-                            IProcessBehaviour usersAndGroupsChecker = new UsersAndGroupsChecker(service);
-                            usersAndGroupsChecker.process();
-                            showOptions();
-                            break;
-
-                        case "quit":
-                            System.out.println("Quiting program...");
-                            searchingStatus = false;
-                            break;
-
-                        default:
-                            System.out.print("You didn't choose any valid option!\n");
-                            System.out.print("Enter value: ");
-                            break;
-
-                    }
-
-            }
-
-            else {
-
-                System.out.print("Empty or blank value!\n");
-                System.out.print("Enter value: ");
+                default:
+                    System.out.print("You didn't choose any valid option!\n");
+                    System.out.print("Enter value: ");
+                    break;
 
             }
 
-        } while (searchingStatus);
+        }
 
     }
 
-    private static void showOptions() {
+    private static void displayMainMenu() {
 
         System.out.println();
-        System.out.println("Select option:");
-        System.out.println("1) Check Request Ports");
-        System.out.println("2) Check Heap Size");
-        System.out.println("3) Check License Key");
-        System.out.println("4) Check Services");
-        System.out.println("5) Check Users and Groups");
-        System.out.println("quit) Quit");
-
-        System.out.print("\nEnter value: ");
+        System.out.println("Main Menu:");
+        System.out.println("1) View Request Ports");
+        System.out.println("2) View Heap Size");
+        System.out.println("3) View License Key");
+        System.out.println("4) View Services");
+        System.out.println("5) View Users and Groups");
+        System.out.println("6) Request Ports");
+        System.out.println("7) \u2190 Exit");
+        System.out.println();
 
     }
 
@@ -193,6 +185,23 @@ public class Main {
 
         throw new IncorrectArgumentException("Arguments validation failed!");
 
+    }
+
+    private static int getUserChoice(Scanner scanner, int min, int max) {
+        int choice;
+        do {
+            System.out.print("Enter your choice: ");
+            while (!scanner.hasNextInt()) {
+                System.out.println("Invalid input. Please enter a number.");
+                System.out.print("Enter your choice: ");
+                scanner.next();
+            }
+            choice = scanner.nextInt();
+            if (choice < min || choice > max) {
+                System.out.println("Invalid choice. Please enter a number between " + min + " and " + max + ".");
+            }
+        } while (choice < min || choice > max);
+        return choice;
     }
 
 }

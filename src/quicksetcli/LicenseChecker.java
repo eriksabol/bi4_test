@@ -28,7 +28,7 @@ public class LicenseChecker implements IProcessBehaviour {
         formatterMap.put("licenseKey", 50);
         formatterMap.put("expiresOn", 50);
 
-        this.printOverallHeader(myInfoObjects, formatterMap);
+        this.printOverallHeader(formatterMap);
 
         for(Object e : myInfoObjects) {
 

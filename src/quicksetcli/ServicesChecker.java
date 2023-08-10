@@ -33,7 +33,7 @@ public class ServicesChecker implements IProcessBehaviour {
         formatterMap.put("hostedServices", 62);
         formatterMap.put("serviceCUID", 25);
 
-        this.printOverallHeader(myInfoObjects, formatterMap);
+        this.printOverallHeader(formatterMap);
 
         for (Object e : myInfoObjects) {
 

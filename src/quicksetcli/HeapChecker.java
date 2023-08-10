@@ -36,7 +36,7 @@ public class HeapChecker implements IProcessBehaviour {
         formatterMap.put("setXmx", 15);
         formatterMap.put("rqrsRestart", 15);
 
-        this.printOverallHeader(myInfoObjects, formatterMap);
+        this.printOverallHeader(formatterMap);
 
         for (Object e : myInfoObjects) {
 

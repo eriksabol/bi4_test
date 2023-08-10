@@ -60,7 +60,7 @@ public class Service {
         this.myEnterpriseSession = null;
         this.mySessionManager = null;
         INSTANCE = null;
-        System.out.println("Succesfully logged off.");
+        System.out.println("Logged off successfully.");
 
     }
 

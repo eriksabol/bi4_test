@@ -31,26 +31,36 @@ public class PortChecker implements IProcessBehaviour {
 
         IInfoObjects myInfoObjects = this.service.getMyInfoStore().query(portQuery);
 
+        int increment = 0;
+
         // Definition of fields
         Map<String, Integer> formatterMap = new LinkedHashMap<>();
+        formatterMap.put("ID", 4);
+        formatterMap.put("stale", 7);
         formatterMap.put("serverTitle", 50);
-        formatterMap.put("serverState", 25);
+        formatterMap.put("serverStatus", 25);
+        formatterMap.put("serverState", 13);
         formatterMap.put("runningPort", 15);
         formatterMap.put("setMethod", 15);
-        formatterMap.put("nowSetTo", 15);
-        formatterMap.put("rqrsRestart", 15);
+        formatterMap.put("nowSetTo", 10);
+        formatterMap.put("CUID", 40);
 
-        this.printOverallHeader(myInfoObjects, formatterMap);
+        this.printOverallHeader(formatterMap);
 
         for (Object e : myInfoObjects) {
+
+            increment++;
 
             IInfoObject myInfoObject = (IInfoObject) e;
             IServer server = (IServer) myInfoObject;
 
             StringBuffer stringBuffer = new StringBuffer();
 
+            this.appendValueToBuffer(formatterMap, stringBuffer, "ID", String.valueOf(increment));
+            this.appendValueToBuffer(formatterMap, stringBuffer, "stale", server.getRequiresRestart() ? "  *" : "");
             this.appendValueToBuffer(formatterMap, stringBuffer, "serverTitle", server.getTitle());
-            this.appendValueToBuffer(formatterMap, stringBuffer, "serverState", server.getState().toString());
+            this.appendValueToBuffer(formatterMap, stringBuffer, "serverStatus", server.getState().toString());
+            this.appendValueToBuffer(formatterMap, stringBuffer, "serverState", server.isDisabled() ? "Disabled" : "Enabled");
 
             if (server.isAlive() && server.getState() != null) {
 
@@ -110,7 +120,7 @@ public class PortChecker implements IProcessBehaviour {
                 this.appendValueToBuffer(formatterMap, stringBuffer, "nowSetTo", "-");
             }
 
-            this.appendValueToBuffer(formatterMap, stringBuffer, "rqrsRestart", String.valueOf(server.getRequiresRestart()));
+            this.appendValueToBuffer(formatterMap, stringBuffer, "CUID", server.getCUID());
 
             System.out.println(stringBuffer);
 
