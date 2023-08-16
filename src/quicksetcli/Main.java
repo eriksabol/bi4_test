@@ -66,15 +66,15 @@ public class Main {
         while(searchingStatus) {
 
             displayMainMenu();
-            int userChoice = getUserChoice(scanner, 1, 7);
+            System.out.print("Enter your choice: ");
+            int userChoice = Helper.getIntInput(scanner, 1, 6);
 
             switch (userChoice) {
 
                 case 1:
-                    System.out.println("Executing Check Request Ports workflow...");
-                    IProcessBehaviour portChecker = new PortChecker(service);
-                    portChecker.process();
-                    displayMainMenu();
+                    System.out.println();
+                    PortSetter portSetter = new PortSetter(service);
+                    portSetter.handleModifyRequestPortMenu(scanner);
                     break;
 
                 case 2:
@@ -107,14 +107,6 @@ public class Main {
 
                 case 6:
                     System.out.println();
-                    PortSetter portSetter = new PortSetter(service);
-                    portSetter.handleModifyRequestPortMenu(scanner);
-//                            portSetter.process();
-//                            showOptions();
-                    break;
-
-                case 7:
-                    System.out.println();
                     scanner.close();
                     searchingStatus = false;
                     break;
@@ -134,13 +126,12 @@ public class Main {
 
         System.out.println();
         System.out.println("Main Menu:");
-        System.out.println("1) View Request Ports");
-        System.out.println("2) View Heap Size");
-        System.out.println("3) View License Key");
-        System.out.println("4) View Services");
-        System.out.println("5) View Users and Groups");
-        System.out.println("6) Request Ports");
-        System.out.println("7) \u2190 Exit");
+        System.out.println("1) Request Ports");
+        System.out.println("2) Heap Size");
+        System.out.println("3) License Key");
+        System.out.println("4) Services");
+        System.out.println("5) Users and Groups");
+        System.out.println("6) ← Exit");
         System.out.println();
 
     }
@@ -186,22 +177,4 @@ public class Main {
         throw new IncorrectArgumentException("Arguments validation failed!");
 
     }
-
-    private static int getUserChoice(Scanner scanner, int min, int max) {
-        int choice;
-        do {
-            System.out.print("Enter your choice: ");
-            while (!scanner.hasNextInt()) {
-                System.out.println("Invalid input. Please enter a number.");
-                System.out.print("Enter your choice: ");
-                scanner.next();
-            }
-            choice = scanner.nextInt();
-            if (choice < min || choice > max) {
-                System.out.println("Invalid choice. Please enter a number between " + min + " and " + max + ".");
-            }
-        } while (choice < min || choice > max);
-        return choice;
-    }
-
 }

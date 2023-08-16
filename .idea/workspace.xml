@@ -29,38 +29,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd19de14-6f9c-497f-9339-ecfef5c4b75d" name="Default Changelist" comment="Initial commit">
-      <change afterPath="$PROJECT_DIR$/src/quicksetcli/PortSetter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/quicksetcli/Constants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/quicksetcli/Helper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/HeapChecker.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/HeapChecker.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/IProcessBehaviour.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/IProcessBehaviour.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/IReadStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/IReadStrategy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/IWriteStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/IWriteStrategy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/IncorrectArgumentException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/IncorrectArgumentException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/LicenseChecker.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/LicenseChecker.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/PortChecker.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/PortChecker.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/Service.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/Service.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/ServicesChecker.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/ServicesChecker.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/UsersAndGroupsChecker.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/UsersAndGroupsChecker.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/test/CheckServices.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/test/CheckServices.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/test/CopyFiles.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/test/CopyFiles.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/test/IAgressiveStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/test/IAgressiveStrategy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/test/IDefensiveStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/test/IDefensiveStrategy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/test/IStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/test/IStrategy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/test/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/test/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/test/MainStreams.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/test/MainStreams.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/test/Person.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/test/Person.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/test/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/test/Player.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/test/ScannerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/test/ScannerTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/quicksetcli/HeapChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/HeapChecker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/PortSetter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/PortSetter.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/quicksetcli/IProcessBehaviour.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/IProcessBehaviour.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/quicksetcli/LicenseChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/LicenseChecker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/quicksetcli/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/quicksetcli/PortChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/PortChecker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/quicksetcli/Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/Service.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/quicksetcli/ServicesChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/ServicesChecker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/PortSetter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/PortSetter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -256,7 +233,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/setting_ports" />
+                        <option value="ports_setting_new" />
                       </list>
                     </value>
                   </entry>
