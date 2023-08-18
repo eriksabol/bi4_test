@@ -29,13 +29,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd19de14-6f9c-497f-9339-ecfef5c4b75d" name="Default Changelist" comment="Initial commit">
-      <change afterPath="$PROJECT_DIR$/src/quicksetcli/Constants.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/quicksetcli/Helper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/IProcessBehaviour.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/IProcessBehaviour.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/PortSetter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/PortSetter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/quicksetcli/IProcessBehaviour.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/IProcessBehaviour.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/Helper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/quicksetcli/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/quicksetcli/PortSetter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/PortSetter.java" afterDir="false" />
     </list>

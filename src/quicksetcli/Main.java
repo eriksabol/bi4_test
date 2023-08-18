@@ -28,19 +28,17 @@ public class Main {
             System.out.print("successfully logged on as " + service.getMyEnterpriseSession().getUserInfo().getUserName() + " to " + service.getMyEnterpriseSession().getClusterName() + "\n");
             Main.displayOptions(service);
 
-            } catch (SDKException exception) {
+        } catch (SDKException exception) {
 
             exception.printStackTrace();
 
         } finally {
 
-            if(service != null) {
+            if (service != null) {
 
                 service.destroyServiceSession();
 
-            }
-
-            else {
+            } else {
 
                 System.out.println("Service session could not be initialized.");
 
@@ -63,11 +61,11 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        while(searchingStatus) {
+        while (searchingStatus) {
 
             displayMainMenu();
             System.out.print("Enter your choice: ");
-            int userChoice = Helper.getIntInput(scanner, 1, 6);
+            int userChoice = Helper.getIntInput(scanner, 1, 6, null, null);
 
             switch (userChoice) {
 
@@ -115,23 +113,20 @@ public class Main {
                     System.out.print("You didn't choose any valid option!\n");
                     System.out.print("Enter value: ");
                     break;
-
             }
-
         }
-
     }
 
     private static void displayMainMenu() {
 
         System.out.println();
         System.out.println("Main Menu:");
-        System.out.println("1) Request Ports");
-        System.out.println("2) Heap Size");
-        System.out.println("3) License Key");
-        System.out.println("4) Services");
-        System.out.println("5) Users and Groups");
-        System.out.println("6) ← Exit");
+        System.out.println("1 Request Ports");
+        System.out.println("2 Heap Size");
+        System.out.println("3 License Key");
+        System.out.println("4 Services");
+        System.out.println("5 Users and Groups");
+        System.out.println("6 ← Exit");
         System.out.println();
 
     }
@@ -160,7 +155,7 @@ public class Main {
 
     }
 
-    private static Map<String, String> validateArgs(String[] args){
+    private static Map<String, String> validateArgs(String[] args) {
 
         if (validateArgumentsPattern(args)) {
 

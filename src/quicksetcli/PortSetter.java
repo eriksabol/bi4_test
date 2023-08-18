@@ -1,6 +1,5 @@
 package quicksetcli;
 
-import com.businessobjects.sdk.plugin.desktop.common.IConfiguredContainer;
 import com.businessobjects.sdk.plugin.desktop.common.IExecProps;
 import com.businessobjects.sdk.plugin.desktop.common.IMetric;
 import com.businessobjects.sdk.plugin.desktop.common.IMetrics;
@@ -17,7 +16,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class PortSetter implements IProcessBehaviour {
+public class PortSetter {
 
     private final Service service;
 
@@ -30,23 +29,22 @@ public class PortSetter implements IProcessBehaviour {
 
     public static void displayModifyRequestPortMenu() {
         System.out.println("Main Menu > Request Ports:");
-        System.out.println("1) View");
-        System.out.println("2) Modify single server");
-        System.out.println("3) Modify multiple servers");
-        System.out.println("4) ← Back");
+        System.out.println("1 View");
+        System.out.println("2 Modify single server");
+        System.out.println("3 Modify multiple servers");
+        System.out.println("4 ← Back");
         System.out.println();
     }
 
     public static void displayMassModifyRequestPortMenu() {
         System.out.println("Main Menu > Request Ports > Modify multiple servers:");
-        System.out.println("1) Modify on all servers (except CMS)");
-        System.out.println("2) Modify only on servers with port set to Auto (except CMS)");
-        System.out.println("3) ← Back");
+        System.out.println("1 Modify on all servers (except CMS)");
+        System.out.println("2 Modify only on servers with port set to Auto assign (except CMS)");
+        System.out.println("3 ← Back");
         System.out.println();
     }
 
-    @Override
-    public void process() throws SDKException {
+    public void viewRequestPorts() throws SDKException {
 
         initializeServerMap(this.serverMap);
         displayPortTable(this.serverMap);
@@ -57,12 +55,12 @@ public class PortSetter implements IProcessBehaviour {
 
             displayModifyRequestPortMenu();
             System.out.print("Enter your choice: ");
-            int requestPortMenuChoice = Helper.getIntInput(scanner, 1, 4);
+            int requestPortMenuChoice = Helper.getIntInput(scanner, 1, 4, null, null);
 
             switch (requestPortMenuChoice) {
                 case 1:
                     System.out.println("Performing actualize state.");
-                    process();
+                    viewRequestPorts();
                     break;
                 case 2:
                     System.out.println("Performing modification of single server request port.");
@@ -70,7 +68,7 @@ public class PortSetter implements IProcessBehaviour {
                     break;
                 case 3:
                     System.out.println("Performing mass modification of request ports.");
-                    handleMassModifyRequestPortActivity(scanner);
+                    handleMassModifyRequestPortMenu(scanner);
                     break;
                 case 4:
                     return; // Return to previous menu
@@ -78,12 +76,12 @@ public class PortSetter implements IProcessBehaviour {
         }
     }
 
-    private void handleMassModifyRequestPortActivity(Scanner scanner) {
+    private void handleMassModifyRequestPortMenu(Scanner scanner) {
         while (true) {
 
             displayMassModifyRequestPortMenu();
             System.out.print("Enter your choice: ");
-            int requestPortMenuChoice = Helper.getIntInput(scanner, 1, 3);
+            int requestPortMenuChoice = Helper.getIntInput(scanner, 1, 3, null, null);
 
             switch (requestPortMenuChoice) {
                 case 1:
@@ -102,45 +100,21 @@ public class PortSetter implements IProcessBehaviour {
 
     private void modifyMultipleRequestPorts(Scanner scanner, String constant) {
 
-        Map<String, Set<Integer>> hostToAvailablePorts = getHostWithAvailablePorts();
-
-        hostToAvailablePorts.forEach((host, ports) ->
-                System.out.println("Host: " + host + ", Available Ports: " + ports)
-        );
-
-        HashSet<Integer> usedAndExcludedPorts = this.serverMap.keySet().stream()
-                .map(key -> getActualServerProps(serverMap, key))
-                .map(this::getActualPort)
-                .filter(port -> port.matches("\\d+"))
-                .map(Integer::valueOf).collect(Collectors.toCollection(HashSet::new));
-
-        // Adding other ports to exclude - SIA/WACS
-        // 6411 is the new ERS SIA port
-        usedAndExcludedPorts.addAll(Arrays.asList(6410, 6405, 6411));
-
-        // Starting from 6401 as port 6400 is generally reserved for CMS
-        int startPort = 6401;
-        int endPort = 6499;
-
-        HashSet<Integer> availablePorts = generateRemainingPorts(startPort, endPort, usedAndExcludedPorts);
-        System.out.println(availablePorts);
-
-        LinkedHashMap<String, Integer> cuidWithPort = getMapOfCuidWithPort(this.serverMap, constant, availablePorts);
+        Map<String, HashSet<Integer>> hostToAvailablePorts = getHostWithAvailablePorts();
+        Map<IServer, Integer> serverWithPort = getServerWithPort(serverMap, hostToAvailablePorts, constant);
 
         System.out.println("The following ports will be set:");
-        cuidWithPort.forEach((cuid, port) -> System.out.println(cuid + " " + port + " " + serverMap.get(cuid).getTitle()));
+        serverWithPort.forEach((server, portNumber) -> System.out.println(portNumber + " " + server.getTitle()));
 
-        askYesNoQuestion(scanner, "\nWould you like to save these Request Port values?",
+        Helper.askYesNoQuestion(scanner, "\nWould you like to save these Request Port values?",
                 () -> {
                     System.out.print("Saving values...");
 
-                    cuidWithPort.forEach((cuid, port) -> {
-
-                        IServer currentServer = serverMap.get(cuid);
+                    serverWithPort.forEach((currentServer, port) -> {
 
                         try {
 
-                            IExecProps serverExecProps = currentServer.getContainer().getExecProps();
+                            IExecProps serverExecProps = getExecProps(currentServer);
                             String serverArgs = serverExecProps.getArgs();
 
                             String pattern = "-requestport\\s+\\d{4}";
@@ -168,11 +142,42 @@ public class PortSetter implements IProcessBehaviour {
                     System.out.println();
                 }
         );
-
     }
 
-    private Map<String, Set<Integer>> getHostWithAvailablePorts() {
-        Map<String, Set<Integer>> hostToAvailablePorts = new HashMap<>();
+    private Map<IServer, Integer> getServerWithPort(Map<String, IServer> serverMap, Map<String, HashSet<Integer>> hostToAvailablePorts, String constant) {
+
+        return serverMap.entrySet().stream()
+                .filter(entry -> {
+                    IServer server = entry.getValue();
+                    return isServerAbbreviationNotCms(server);
+                }).filter(entry -> {
+                    IServer server = entry.getValue();
+                    IExecProps execProps = getExecProps(server);
+                    String port = getActualPort(execProps);
+                    return constant.equals(Constants.ALL) || (constant.equals(Constants.ONLY_AUTO) && port.equals("-"));
+                }).collect(Collectors.toMap(
+                        Map.Entry::getValue,
+                        entry -> {
+                            IServer server = entry.getValue();
+                            String siaHostname = server.getSIAHostname();
+                            HashSet<Integer> portIntegers = hostToAvailablePorts.get(siaHostname);
+                            return nextAvailableValue(portIntegers);
+                        },
+                        (oldValue, newValue) -> oldValue,   // in case there will be duplicate => no real way, but handled
+                        LinkedHashMap::new
+                ));
+    }
+
+    private IExecProps getExecProps(IServer server) {
+        try {
+            return server.getContainer().getExecProps();
+        } catch (SDKException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private Map<String, HashSet<Integer>> getHostWithAvailablePorts() {
+        Map<String, HashSet<Integer>> hostToAvailablePorts = new HashMap<>();
         Map<String, List<IServer>> hostToServersMap = new HashMap<>();
 
         for (IServer server : serverMap.values()) {
@@ -182,14 +187,8 @@ public class PortSetter implements IProcessBehaviour {
 
         hostToServersMap.forEach((host, listOfServers) -> {
             HashSet<Integer> usedAndExcludedPortsOnHostNew = listOfServers.stream()
-                    .map(server -> {
-                        try {
-                            return getActualPort(server.getContainer().getExecProps());
-                        } catch (SDKException e) {
-                            throw new RuntimeException(e);
-                        }
-                    })
-                    .filter(port -> port.matches("\\d+"))
+                    .map(this::getRunningPort)
+                    .filter(port -> port.matches("\\b(640[1-9]|64[1-8]\\d|6499)\\b"))
                     .map(Integer::valueOf).collect(Collectors.toCollection(HashSet::new));
 
             int startPort = 6401;
@@ -197,44 +196,16 @@ public class PortSetter implements IProcessBehaviour {
 
             usedAndExcludedPortsOnHostNew.addAll(Arrays.asList(Constants.SIA_PORT, Constants.WACS_PORT, 6411));
 
-            Set<Integer> availablePorts = generateRemainingPorts(startPort, endPort, usedAndExcludedPortsOnHostNew);
+            HashSet<Integer> availablePorts = generateRemainingPorts(startPort, endPort, usedAndExcludedPortsOnHostNew);
             hostToAvailablePorts.put(host, availablePorts);
 
         });
         return hostToAvailablePorts;
     }
 
-    private LinkedHashMap<String, Integer> getMapOfCuidWithPort(Map<String, IServer> serverMap, String constant, HashSet<Integer> availablePorts) {
-        return serverMap.keySet().stream()
-                .filter(key -> isServerAbbreviationNotCms(serverMap, key))
-                .filter(key -> applyFilterConstant(serverMap, constant, key))
-                .collect(Collectors.toMap(
-                        key -> getCUIDOrThrowRuntimeException(serverMap, key),
-                        value -> nextAvailableValue(availablePorts),
-                        (oldValue, newValue) -> oldValue,   // in case there will be duplicate => no real way, but handled
-                        LinkedHashMap::new
-                ));
-    }
-
-    private boolean isServerAbbreviationNotCms(Map<String, IServer> serverMap, String key) {
+    private boolean isServerAbbreviationNotCms(IServer server) {
         try {
-            return !serverMap.get(key).getServerAbbreviation().equals("cms");
-        } catch (SDKException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private boolean applyFilterConstant(Map<String, IServer> serverMap, String constant, String key) {
-
-        IExecProps execProps = getActualServerProps(serverMap, key);
-        String port = getActualPort(execProps);
-        return constant.equals(Constants.ALL) || (constant.equals(Constants.ONLY_AUTO) && port.equals("-"));
-
-    }
-
-    private String getCUIDOrThrowRuntimeException(Map<String, IServer> serverMap, String key) {
-        try {
-            return serverMap.get(key).getCUID();
+            return !server.getServerAbbreviation().equals("cms");
         } catch (SDKException e) {
             throw new RuntimeException(e);
         }
@@ -274,32 +245,33 @@ public class PortSetter implements IProcessBehaviour {
         formatterMap.put("ID", 4);
         formatterMap.put("stale", 7);
         formatterMap.put("serverTitle", 50);
+        formatterMap.put("hostname", 20);
         formatterMap.put("serverStatus", 25);
         formatterMap.put("serverState", 13);
         formatterMap.put("runningPort", 15);
         formatterMap.put("setMethod", 15);
         formatterMap.put("actualPort", 12);
-        formatterMap.put("CUID", 38);
 
-        this.printOverallHeader(formatterMap);
+        Helper.printOverallHeader(formatterMap);
 
         AtomicInteger increment = new AtomicInteger(0);
         serverMap.keySet().stream()
                 .map(key -> {
-                    IExecProps serverExecProps = getActualServerProps(serverMap, key);
+                    IServer server = serverMap.get(key);
+                    IExecProps serverExecProps = getExecProps(server);
                     StringBuffer stringBuffer = new StringBuffer();
 
                     try {
 
-                    appendValueToBuffer(formatterMap, stringBuffer, "ID", String.valueOf(increment.getAndIncrement()));
-                    appendValueToBuffer(formatterMap, stringBuffer, "stale", serverMap.get(key).getRequiresRestart() ? "  *" : "");
-                    appendValueToBuffer(formatterMap, stringBuffer, "serverTitle", serverMap.get(key).getTitle());
-                    appendValueToBuffer(formatterMap, stringBuffer, "serverStatus", serverMap.get(key).getState().toString());
-                    appendValueToBuffer(formatterMap, stringBuffer, "serverState", serverMap.get(key).isDisabled() ? "Disabled" : "Enabled");
-                    appendValueToBuffer(formatterMap, stringBuffer, "runningPort", getRunningPort(serverMap, key));
-                    appendValueToBuffer(formatterMap, stringBuffer, "setMethod", getPortSetMethod(serverExecProps.getArgs()));
-                    appendValueToBuffer(formatterMap, stringBuffer, "actualPort", getActualPort(serverExecProps));
-                    appendValueToBuffer(formatterMap, stringBuffer, "CUID", serverMap.get(key).getCUID());
+                        Helper.appendValueToBuffer(formatterMap, stringBuffer, "ID", String.valueOf(increment.getAndIncrement()));
+                        Helper.appendValueToBuffer(formatterMap, stringBuffer, "stale", server.getRequiresRestart() ? "  *" : "");
+                        Helper.appendValueToBuffer(formatterMap, stringBuffer, "serverTitle", server.getTitle());
+                        Helper.appendValueToBuffer(formatterMap, stringBuffer, "hostname", server.getSIAHostname());
+                        Helper.appendValueToBuffer(formatterMap, stringBuffer, "serverStatus", server.getState().toString());
+                        Helper.appendValueToBuffer(formatterMap, stringBuffer, "serverState", server.isDisabled() ? "Disabled" : "Enabled");
+                        Helper.appendValueToBuffer(formatterMap, stringBuffer, "runningPort", getRunningPort(server));
+                        Helper.appendValueToBuffer(formatterMap, stringBuffer, "setMethod", getPortSetMethod(serverExecProps.getArgs()));
+                        Helper.appendValueToBuffer(formatterMap, stringBuffer, "actualPort", getActualPort(serverExecProps));
 
                     } catch (SDKException e) {
                         throw new RuntimeException(e);
@@ -310,18 +282,6 @@ public class PortSetter implements IProcessBehaviour {
                 .forEach(System.out::println);
 
         System.out.println();
-
-    }
-
-    private IExecProps getActualServerProps(Map<String, IServer> serverMap, String key) {
-
-        try {
-            IConfiguredContainer configuredContainer = serverMap.get(key).getContainer();
-            return configuredContainer.getExecProps();
-
-        } catch (SDKException e) {
-            throw new RuntimeException(e);
-        }
 
     }
 
@@ -341,21 +301,26 @@ public class PortSetter implements IProcessBehaviour {
         return "-";
     }
 
-    private String getRunningPort(Map<String, IServer> serverMap, String key) throws SDKException {
+    private String getRunningPort(IServer server) {
 
-        if (serverMap.get(key).isAlive() && serverMap.get(key).getState() != null) {
+        try {
 
-            IServerMetrics serverMetrics = serverMap.get(key).getMetrics();
-            IMetrics metrics = serverMetrics.getMetrics("ISGeneralAdmin");
+            if (server.isAlive() && server.getState() != null) {
 
-            for (Object m : metrics) {
+                IServerMetrics serverMetrics = server.getMetrics();
+                IMetrics metrics = serverMetrics.getMetrics("ISGeneralAdmin");
 
-                IMetric metric = (IMetric) m;
+                for (Object m : metrics) {
 
-                if (metric.getName().equals("ISPROP_GEN_HOST_PORT")) return metric.getValue().toString();
+                    IMetric metric = (IMetric) m;
+
+                    if (metric.getName().equals("ISPROP_GEN_HOST_PORT")) return metric.getValue().toString();
+
+                }
 
             }
-
+        } catch (SDKException e) {
+            throw new RuntimeException(e);
         }
 
         return "-";
@@ -371,7 +336,11 @@ public class PortSetter implements IProcessBehaviour {
 
     private void initializeServerMap(Map<String, IServer> serverMap) throws SDKException {
 
-        System.out.print("Initializing server map...");
+        if (serverMap.isEmpty()) {
+            System.out.print("Initializing server map...");
+        } else {
+            System.out.print("Updating server map...");
+        }
 
         IInfoObjects myInfoObjects = this.service.getMyInfoStore().query("SELECT * FROM CI_SYSTEMOBJECTS WHERE SI_KIND='Server' order by SI_NAME ASC");
 
@@ -389,47 +358,58 @@ public class PortSetter implements IProcessBehaviour {
     private void modifySingleRequestPort(Scanner scanner) throws SDKException {
 
         System.out.print("Choose Server ID: ");
-        int serverID = Helper.getIntInput(scanner, 0, serverMap.size() - 1);
+        int serverID = Helper.getIntInput(scanner, 0, serverMap.size() - 1, null, null);
 
         Object[] serverArray = serverMap.keySet().toArray();
         String key = (String) serverArray[serverID];
         IServer selectedServer = serverMap.get(key);
+        IExecProps serverExecProps = getExecProps(selectedServer);
+        String actualServerArguments = serverExecProps.getArgs();
 
-        String serverCUID = selectedServer.getCUID();
+        List<Integer> runningPorts = serverMap.values().stream()
+                .map(this::getRunningPort)
+                .filter(port -> port.matches("\\d+"))
+                .map(Integer::valueOf)
+                .collect(Collectors.toList());
+
+        List<Integer> actualPorts = serverMap.values().stream().map(server -> {
+
+                    IExecProps execProps = getExecProps(server);
+                    return getActualPort(execProps);
+
+                }).filter(port -> port.matches("\\d+"))
+                .map(Integer::valueOf)
+                .collect(Collectors.toList());
+
         String serverName = selectedServer.getTitle();
         System.out.println("Server Name: " + serverName);
 
-        String actualRequestPort = getRunningPort(serverMap, serverCUID);
+        String actualRunningPort = getRunningPort(selectedServer);
+        System.out.println("Actual Running Port: " + actualRunningPort);
+
+        String actualRequestPort = getActualPort(serverExecProps);
         System.out.println("Actual Request Port: " + actualRequestPort);
 
         System.out.print("Choose new Request Port [6401-6499]: ");
-        int newRequestPort = Helper.getIntInput(scanner, 6401, 6499);
+        int newRequestPort = Helper.getIntInput(scanner, 6401, 6499,
+                port -> !runningPorts.contains(port) && !actualPorts.contains(port),   // output from the function is an input for this predicate
+                "Your request port is already taken or currently set on another server! Please choose another one");
 
         System.out.println("\n--- Summary ---");
         System.out.println("Server Name: " + serverName);
+        System.out.println("Actual Running Port: " + actualRunningPort);
         System.out.println("Actual Request Port: " + actualRequestPort);
         System.out.println("Hostname: " + selectedServer.getSIAHostname());
         System.out.println("New Request Port: " + newRequestPort);
-        System.out.println("Server CUID: " + serverCUID);
-
-        IExecProps serverExecProps = getActualServerProps(serverMap, serverCUID);
-        String actualServerExecProps = serverExecProps.getArgs();
 
         String pattern = "-requestport\\s+\\d{4}";
         String replacementString = "-requestport " + newRequestPort;
+        String modifiedArguments = getModifiedArguments(pattern, replacementString, actualServerArguments);
 
-        String modifiedServerExecProps = actualServerExecProps.replaceAll(pattern, replacementString);
-
-        if (modifiedServerExecProps.equals(actualServerExecProps)) {
-            modifiedServerExecProps += " " + replacementString;
-        }
-
-        final String effectivelyFinalExecProps = modifiedServerExecProps;
-
-        askYesNoQuestion(scanner, "\nDo you want to save the new Request Port value?",
+        Helper.askYesNoQuestion(scanner, "\nDo you want to save the new Request Port value?",
                 () -> {
                     System.out.print("Saving values...");
-                    serverExecProps.setArgs(effectivelyFinalExecProps);
+                    serverExecProps.setArgs(modifiedArguments);
                     try {
                         selectedServer.save();
                     } catch (SDKException e) {
