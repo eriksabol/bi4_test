@@ -10,8 +10,11 @@ public class Helper {
     public static int getIntInput(Scanner scanner, int min, int max, Predicate<Integer> additionalCheck, String errorMessage) {
         while (true) {
             try {
-                String inputString = scanner.next();
+                String inputString = scanner.next().toLowerCase();
                 if (!inputString.isEmpty()) {
+                    if (inputString.equals("b") || inputString.equals("back")) {
+                        return -1; // Return a special value for 'B' or 'b'
+                    }
                     int input = Integer.parseInt(inputString);
                     if (input >= min && input <= max && (additionalCheck == null || additionalCheck.test(input))) {
                         return input;

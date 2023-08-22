@@ -28,17 +28,19 @@ public class Main {
             System.out.print("successfully logged on as " + service.getMyEnterpriseSession().getUserInfo().getUserName() + " to " + service.getMyEnterpriseSession().getClusterName() + "\n");
             Main.displayOptions(service);
 
-        } catch (SDKException exception) {
+            } catch (SDKException exception) {
 
             exception.printStackTrace();
 
         } finally {
 
-            if (service != null) {
+            if(service != null) {
 
                 service.destroyServiceSession();
 
-            } else {
+            }
+
+            else {
 
                 System.out.println("Service session could not be initialized.");
 
@@ -50,14 +52,14 @@ public class Main {
     }
 
     private static void printProgramHeader() {
-        String welcomeMessage = "--- Welcome to QUICKSET CLI tool v1.00 ---";
+        String welcomeMessage = "--- Welcome to BI4 QUICKSET CLI tool v1.10 ---";
         final int welcomeLength = welcomeMessage.length();
         System.out.println(String.join("", Collections.nCopies(welcomeLength, "-")));
         System.out.println(welcomeMessage);
         System.out.println(String.join("", Collections.nCopies(welcomeLength, "-")));
     }
 
-    private static void displayOptions(Service service) throws SDKException {
+    public static void displayOptions(Service service) throws SDKException {
 
         Scanner scanner = new Scanner(System.in);
 
@@ -155,7 +157,7 @@ public class Main {
 
     }
 
-    private static Map<String, String> validateArgs(String[] args) {
+    private static Map<String, String> validateArgs(String[] args){
 
         if (validateArgumentsPattern(args)) {
 

@@ -4,7 +4,6 @@ import com.crystaldecisions.sdk.exception.SDKException;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.Scanner;
 
 public interface IProcessBehaviour {
 
@@ -32,21 +31,6 @@ public interface IProcessBehaviour {
     default void appendValueToBuffer(Map<String, Integer> formatterMap, StringBuffer stringBuffer, String keyInMap, String valueToBuffer) {
 
         stringBuffer.append(String.format("%-" + formatterMap.get(keyInMap) + "s", valueToBuffer));
-
-    }
-
-    default void askYesNoQuestion(Scanner scanner, String question, Runnable yesAction, Runnable noAction) {
-
-        System.out.print(question + " (yes/no): ");
-        String userInput = scanner.next().trim().toLowerCase();
-
-        if (userInput.equals("yes")) {
-            yesAction.run();
-        } else if (userInput.equals("no")) {
-            noAction.run();
-        } else {
-            System.out.println("Invalid input. Please enter 'yes' or 'no'.");
-        }
 
     }
 
