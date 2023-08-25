@@ -10,13 +10,13 @@ import java.util.Map;
 import java.util.Scanner;
 
 
-public class MenuModifyRequestPort implements Menu {
+public class MenuRequestPortModify implements Menu {
 
     private final Scanner scanner;
     private final Map<String, IServer> serverMap;
     private final Service service;
 
-    public MenuModifyRequestPort(Scanner scanner, Service service) {
+    public MenuRequestPortModify(Scanner scanner, Service service) {
         this.scanner = scanner;
         this.service = service;
         this.serverMap = initializeServerMap();
@@ -51,7 +51,7 @@ public class MenuModifyRequestPort implements Menu {
                     break;
                 case 3:
                     Helper.printEmptyLines(1);
-                    MenuMassModifyRequestPort menuMassModifyRequestPort = new MenuMassModifyRequestPort(scanner, serverMap);
+                    MenuRequestPortMassModify menuMassModifyRequestPort = new MenuRequestPortMassModify(scanner, serverMap);
                     menuMassModifyRequestPort.view();
                     break;
                 case -1:

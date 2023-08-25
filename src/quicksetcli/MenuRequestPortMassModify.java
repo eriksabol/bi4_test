@@ -7,11 +7,11 @@ import java.util.Scanner;
 
 import static quicksetcli.Helper.printEmptyLines;
 
-public class MenuMassModifyRequestPort implements Menu {
+public class MenuRequestPortMassModify implements Menu {
     private final Scanner scanner;
     private final Map<String, IServer> serverMap;
 
-    public MenuMassModifyRequestPort(Scanner scanner, Map<String, IServer> serverMap) {
+    public MenuRequestPortMassModify(Scanner scanner, Map<String, IServer> serverMap) {
         this.scanner = scanner;
         this.serverMap = serverMap;
     }

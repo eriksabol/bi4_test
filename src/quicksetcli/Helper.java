@@ -45,14 +45,14 @@ public class Helper {
 
     }
 
-    private static void printHeaderLine(Map<String, Integer> formatterMap) {
+    public static void printHeaderLine(Map<String, Integer> formatterMap) {
 
         formatterMap.forEach((key, value) -> System.out.printf("%-" + value + "s", key));
         System.out.println();
 
     }
 
-    private static void printDashedSpacer(Map<String, Integer> formatterMap) {
+    public static void printDashedSpacer(Map<String, Integer> formatterMap) {
 
         Integer sumOfFormattedSpace = formatterMap.values().stream().reduce(0, Integer::sum);
         System.out.println(String.join("", Collections.nCopies(sumOfFormattedSpace, "-")));

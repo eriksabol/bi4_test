@@ -28,30 +28,26 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd19de14-6f9c-497f-9339-ecfef5c4b75d" name="Default Changelist" comment="improvements">
-      <change afterPath="$PROJECT_DIR$/src/quicksetcli/BaseCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/quicksetcli/Command.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/quicksetcli/Menu.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/quicksetcli/MenuMassModifyRequestPort.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/quicksetcli/MenuModifyRequestPort.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/quicksetcli/RequestPortMultipleSet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/quicksetcli/RequestPortSingleSet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/quicksetcli/RequestPortView.java" afterDir="false" />
+    <list default="true" id="cd19de14-6f9c-497f-9339-ecfef5c4b75d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/Constants.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/Constants.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/Helper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/Helper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/HeapChecker.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/HeapChecker.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/IProcessBehaviour.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/IProcessBehaviour.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/IReadStrategy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/IWriteStrategy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/PortSetter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/quicksetcli/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/LicenseChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/MenuMassModifyRequestPort.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/MenuModifyRequestPort.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/ServicesChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/UsersAndGroupsChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/HeapChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/HeapChecker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/quicksetcli/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/Helper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/quicksetcli/IReadStrategy.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/quicksetcli/IWriteStrategy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/IProcessBehaviour.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/LicenseChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/LicenseChecker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/quicksetcli/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/quicksetcli/PortChecker.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/quicksetcli/PortSetter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/PortSetterBackup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/MenuMassModifyRequestPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/MenuRequestPortMassModify.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/MenuModifyRequestPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/MenuRequestPortModify.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/PortSetterBackup.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/ServicesChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/ServicesChecker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/UsersAndGroupsChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/UsersAndGroupsChecker.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,9 +88,9 @@
       </set>
     </option>
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="1bH8CYmFH4UF327ZFOKDf77lyiB" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">

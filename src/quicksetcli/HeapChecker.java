@@ -12,7 +12,10 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class HeapChecker implements IProcessBehaviour {
+import static quicksetcli.Helper.*;
+import static quicksetcli.Helper.printOverallHeader;
+
+public class HeapChecker extends BaseCommand {
 
     private final Service service;
 
@@ -21,12 +24,17 @@ public class HeapChecker implements IProcessBehaviour {
     }
 
     @Override
-    public void process() throws SDKException {
+    public void execute() {
 
 
         String serverQuery = "SELECT * FROM CI_SYSTEMOBJECTS WHERE SI_KIND='Server' order by SI_NAME ASC";
 
-        IInfoObjects myInfoObjects = this.service.getMyInfoStore().query(serverQuery);
+        IInfoObjects myInfoObjects = null;
+        try {
+            myInfoObjects = this.service.getMyInfoStore().query(serverQuery);
+        } catch (SDKException e) {
+            throw new RuntimeException(e);
+        }
 
         //Definition of fields
         Map<String, Integer> formatterMap = new LinkedHashMap<>();
@@ -36,22 +44,27 @@ public class HeapChecker implements IProcessBehaviour {
         formatterMap.put("setXmx", 15);
         formatterMap.put("rqrsRestart", 15);
 
-        this.printOverallHeader(formatterMap);
+        printOverallHeader(formatterMap);
 
         for (Object e : myInfoObjects) {
 
             IInfoObject myInfoObject = (IInfoObject) e;
             IServer server = (IServer) myInfoObject;
 
-            IConfiguredContainer configuredContainer = server.getContainer();
+            IConfiguredContainer configuredContainer = null;
+            try {
+                configuredContainer = server.getContainer();
+            } catch (SDKException ex) {
+                throw new RuntimeException(ex);
+            }
             IExecProps serverExecProps = configuredContainer.getExecProps();
 
             String actualServerExecProps = serverExecProps.getArgs();
 
             StringBuffer stringBuffer = new StringBuffer();
 
-            this.appendValueToBuffer(formatterMap, stringBuffer, "serverTitle", server.getTitle());
-            this.appendValueToBuffer(formatterMap, stringBuffer, "serverState", server.getState().toString());
+            appendValueToBuffer(formatterMap, stringBuffer, "serverTitle", server.getTitle());
+            appendValueToBuffer(formatterMap, stringBuffer, "serverState", server.getState().toString());
 
             // Pattern for Xmx
             Pattern patternXmx = Pattern.compile("Xmx[0-9]{1,5}[m,g]{1}");
@@ -62,13 +75,13 @@ public class HeapChecker implements IProcessBehaviour {
             if(matcherSetXmx.find()) {
 
                 String xmxSetString = matcherSetXmx.group();
-                this.appendValueToBuffer(formatterMap, stringBuffer, "currentXmx", xmxSetString);
+                appendValueToBuffer(formatterMap, stringBuffer, "currentXmx", xmxSetString);
 
             }
 
             else {
 
-                this.appendValueToBuffer(formatterMap, stringBuffer, "currentXmx", "-");
+                appendValueToBuffer(formatterMap, stringBuffer, "currentXmx", "-");
 
             }
 
@@ -78,17 +91,17 @@ public class HeapChecker implements IProcessBehaviour {
             if(matcherXmx.find()) {
 
                 String xmxString = matcherXmx.group();
-                this.appendValueToBuffer(formatterMap, stringBuffer, "setXmx", xmxString);
+                appendValueToBuffer(formatterMap, stringBuffer, "setXmx", xmxString);
 
             }
 
             else {
 
-                this.appendValueToBuffer(formatterMap, stringBuffer, "setXmx", "-");
+                appendValueToBuffer(formatterMap, stringBuffer, "setXmx", "-");
 
             }
 
-            this.appendValueToBuffer(formatterMap, stringBuffer, "rqrsRestart", String.valueOf(server.getRequiresRestart()));
+            appendValueToBuffer(formatterMap, stringBuffer, "rqrsRestart", String.valueOf(server.getRequiresRestart()));
 
             System.out.println(stringBuffer);
 

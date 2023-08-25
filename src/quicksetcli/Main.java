@@ -73,32 +73,32 @@ public class Main {
 
                 case 1:
                     printEmptyLines(1);
-                    MenuModifyRequestPort menuModifyRequestPort = new MenuModifyRequestPort(scanner, service);
+                    MenuRequestPortModify menuModifyRequestPort = new MenuRequestPortModify(scanner, service);
                     menuModifyRequestPort.view();
                     break;
 
                 case 2:
                     printEmptyLines(1);
-                    IProcessBehaviour heapChecker = new HeapChecker(service);
-                    heapChecker.process();
+                    HeapChecker heapChecker = new HeapChecker(service);
+                    heapChecker.execute();
                     break;
 
                 case 3:
                     printEmptyLines(1);
-                    IProcessBehaviour licenseCheckerV1 = new LicenseChecker(service);
-                    licenseCheckerV1.process();
+                    LicenseChecker licenseChecker = new LicenseChecker(service);
+                    licenseChecker.execute();
                     break;
 
                 case 4:
                     printEmptyLines(1);
-                    IProcessBehaviour servicesChecker = new ServicesChecker(service);
-                    servicesChecker.process();
+                    ServicesChecker servicesChecker = new ServicesChecker(service);
+                    servicesChecker.execute();
                     break;
 
                 case 5:
                     printEmptyLines(1);
-                    IProcessBehaviour usersAndGroupsChecker = new UsersAndGroupsChecker(service);
-                    usersAndGroupsChecker.process();
+                    UsersAndGroupsChecker usersAndGroupsChecker = new UsersAndGroupsChecker(service);
+                    usersAndGroupsChecker.execute();
                     break;
 
                 case -1:
@@ -137,15 +137,12 @@ public class Main {
             if (args[0].substring(2).isEmpty() || args[1].substring(2).isEmpty() || args[2].substring(2).isEmpty() || args[3].substring(2).isEmpty()) {
 
                 throw new IncorrectArgumentException("Command line arguments supplied empty value(s).");
-
             }
 
             return true;
-
         }
 
         throw new IncorrectArgumentException("Command line arguments have incorrect pattern.");
-
     }
 
     private static Map<String, String> validateArgs(String[] args) {
@@ -163,7 +160,6 @@ public class Main {
         }
 
         throw new IncorrectArgumentException("Arguments validation failed!");
-
     }
 
 }

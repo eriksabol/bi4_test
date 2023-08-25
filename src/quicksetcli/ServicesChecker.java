@@ -11,7 +11,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class ServicesChecker implements IProcessBehaviour {
+public class ServicesChecker extends BaseCommand {
 
     private final Service service;
 
@@ -20,12 +20,16 @@ public class ServicesChecker implements IProcessBehaviour {
     }
 
     @Override
-    public void process() throws SDKException {
-
+    public void execute() {
 
         String serverQuery = "SELECT * FROM CI_SYSTEMOBJECTS WHERE SI_KIND='Server' order by SI_NAME ASC";
 
-        IInfoObjects myInfoObjects = this.service.getMyInfoStore().query(serverQuery);
+        IInfoObjects myInfoObjects = null;
+        try {
+            myInfoObjects = this.service.getMyInfoStore().query(serverQuery);
+        } catch (SDKException e) {
+            throw new RuntimeException(e);
+        }
 
         //Definition of fields
         Map<String, Integer> formatterMap = new LinkedHashMap<>();
@@ -33,14 +37,19 @@ public class ServicesChecker implements IProcessBehaviour {
         formatterMap.put("hostedServices", 62);
         formatterMap.put("serviceCUID", 25);
 
-        this.printOverallHeader(formatterMap);
+        Helper.printOverallHeader(formatterMap);
 
         for (Object e : myInfoObjects) {
 
             IInfoObject myInfoObject = (IInfoObject) e;
             IServer server = (IServer) myInfoObject;
 
-            IConfiguredServices configuredServices = server.getHostedServices();
+            IConfiguredServices configuredServices = null;
+            try {
+                configuredServices = server.getHostedServices();
+            } catch (SDKException ex) {
+                throw new RuntimeException(ex);
+            }
 
             Set<Integer> configuredServiceIDs = configuredServices.getConfiguredServiceIDs();
 
@@ -52,24 +61,28 @@ public class ServicesChecker implements IProcessBehaviour {
                 String serviceCUID = configuredService.getCUID();
                 String serverTitle = server.getTitle();
 
-                String serviceQuery = "SELECT * FROM CI_SYSTEMOBJECTS WHERE SI_CUID='" + serviceCUID +"'";
-                IInfoObjects serviceInfoObjects = this.service.getMyInfoStore().query(serviceQuery);
+                String serviceQuery = "SELECT * FROM CI_SYSTEMOBJECTS WHERE SI_CUID='" + serviceCUID + "'";
+                IInfoObjects serviceInfoObjects;
+                try {
+                    serviceInfoObjects = this.service.getMyInfoStore().query(serviceQuery);
+                } catch (SDKException ex) {
+                    throw new RuntimeException(ex);
+                }
                 IInfoObject serviceInfoObject = (IInfoObject) serviceInfoObjects.get(0);
 
                 StringBuffer stringBuffer = new StringBuffer();
 
-                if(!serverNameAlreadyDisplayed) {
+                if (!serverNameAlreadyDisplayed) {
 
-                    this.appendValueToBuffer(formatterMap, stringBuffer, "serverTitle", serverTitle);
-                    this.appendValueToBuffer(formatterMap, stringBuffer, "hostedServices", serviceInfoObject.getDescription());
-                    this.appendValueToBuffer(formatterMap, stringBuffer, "serviceCUID", serviceCUID);
+                    Helper.appendValueToBuffer(formatterMap, stringBuffer, "serverTitle", serverTitle);
+                    Helper.appendValueToBuffer(formatterMap, stringBuffer, "hostedServices", serviceInfoObject.getDescription());
+                    Helper.appendValueToBuffer(formatterMap, stringBuffer, "serviceCUID", serviceCUID);
                     serverNameAlreadyDisplayed = true;
-                }
-                else {
+                } else {
 
-                    this.appendValueToBuffer(formatterMap, stringBuffer, "serverTitle", "");
-                    this.appendValueToBuffer(formatterMap, stringBuffer, "hostedServices", serviceInfoObject.getDescription());
-                    this.appendValueToBuffer(formatterMap, stringBuffer, "serviceCUID", serviceCUID);
+                    Helper.appendValueToBuffer(formatterMap, stringBuffer, "serverTitle", "");
+                    Helper.appendValueToBuffer(formatterMap, stringBuffer, "hostedServices", serviceInfoObject.getDescription());
+                    Helper.appendValueToBuffer(formatterMap, stringBuffer, "serviceCUID", serviceCUID);
 
                 }
 
@@ -77,7 +90,7 @@ public class ServicesChecker implements IProcessBehaviour {
 
             }
 
-            this.printDashedSpacer(formatterMap);
+            Helper.printDashedSpacer(formatterMap);
 
         }
 
