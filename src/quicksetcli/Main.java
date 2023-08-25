@@ -7,10 +7,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import static quicksetcli.Helper.printEmptyLines;
+
 public class Main {
 
 //    Windows OS level execution:
-//    C:\Users\Erik\IdeaProjects\Test\out\production\Test>java -Djava.ext.dirs="C:\Users\Erik\Documents\APPS\BI42_SP7_jars" quicksetcli/QuickSetToolNew2 -UAdministrator -PPenguin7 -Slinux-1bji:6400 -AsecEnterprise
+//    C:\Users\Erik\IdeaProjects\Test\out\production\Test>java -Djava.ext.dirs="C:\Users\Erik\Documents\APPS\BI42_SP7_jars" quicksetcli/QuickSetToolNew2 -UAdministrator -Ppassword -Shostname:6400 -AsecEnterprise
 
     private static Service service = null;
     private static Boolean searchingStatus = true;
@@ -26,21 +28,19 @@ public class Main {
             System.out.print("Logging on...");
             service = Service.createServiceSession(credentials);
             System.out.print("successfully logged on as " + service.getMyEnterpriseSession().getUserInfo().getUserName() + " to " + service.getMyEnterpriseSession().getClusterName() + "\n");
-            Main.displayOptions(service);
+            displayOptions(service);
 
-            } catch (SDKException exception) {
+        } catch (SDKException e) {
 
-            exception.printStackTrace();
+            throw new RuntimeException(e);
 
         } finally {
 
-            if(service != null) {
+            if (service != null) {
 
                 service.destroyServiceSession();
 
-            }
-
-            else {
+            } else {
 
                 System.out.println("Service session could not be initialized.");
 
@@ -67,53 +67,44 @@ public class Main {
 
             displayMainMenu();
             System.out.print("Enter your choice: ");
-            int userChoice = Helper.getIntInput(scanner, 1, 6, null, null);
+            int userChoice = Helper.getIntInput(scanner, 1, 5, null, null);
 
             switch (userChoice) {
 
                 case 1:
-                    System.out.println();
-                    PortSetter portSetter = new PortSetter(service);
-                    portSetter.handleModifyRequestPortMenu(scanner);
+                    printEmptyLines(1);
+                    MenuModifyRequestPort menuModifyRequestPort = new MenuModifyRequestPort(scanner, service);
+                    menuModifyRequestPort.view();
                     break;
 
                 case 2:
-                    System.out.println("Executing Check Heap Size workflow...");
+                    printEmptyLines(1);
                     IProcessBehaviour heapChecker = new HeapChecker(service);
                     heapChecker.process();
-                    displayMainMenu();
                     break;
 
                 case 3:
-                    System.out.println("Executing Check License Key workflow...");
+                    printEmptyLines(1);
                     IProcessBehaviour licenseCheckerV1 = new LicenseChecker(service);
                     licenseCheckerV1.process();
-                    displayMainMenu();
                     break;
 
                 case 4:
-                    System.out.println("Executing Check Services workflow...");
+                    printEmptyLines(1);
                     IProcessBehaviour servicesChecker = new ServicesChecker(service);
                     servicesChecker.process();
-                    displayMainMenu();
                     break;
 
                 case 5:
-                    System.out.println("Executing Users and Groups workflow...");
+                    printEmptyLines(1);
                     IProcessBehaviour usersAndGroupsChecker = new UsersAndGroupsChecker(service);
                     usersAndGroupsChecker.process();
-                    displayMainMenu();
                     break;
 
-                case 6:
-                    System.out.println();
+                case -1:
+                    printEmptyLines(1);
                     scanner.close();
                     searchingStatus = false;
-                    break;
-
-                default:
-                    System.out.print("You didn't choose any valid option!\n");
-                    System.out.print("Enter value: ");
                     break;
             }
         }
@@ -121,15 +112,15 @@ public class Main {
 
     private static void displayMainMenu() {
 
-        System.out.println();
+        printEmptyLines(1);
         System.out.println("Main Menu:");
-        System.out.println("1 Request Ports");
+        System.out.println("1 Request Ports [+]");
         System.out.println("2 Heap Size");
         System.out.println("3 License Key");
         System.out.println("4 Services");
         System.out.println("5 Users and Groups");
-        System.out.println("6 ← Exit");
-        System.out.println();
+        System.out.println("b ← Exit");
+        printEmptyLines(1);
 
     }
 
@@ -157,7 +148,7 @@ public class Main {
 
     }
 
-    private static Map<String, String> validateArgs(String[] args){
+    private static Map<String, String> validateArgs(String[] args) {
 
         if (validateArgumentsPattern(args)) {
 
@@ -174,4 +165,5 @@ public class Main {
         throw new IncorrectArgumentException("Arguments validation failed!");
 
     }
+
 }

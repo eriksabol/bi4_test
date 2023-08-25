@@ -16,11 +16,11 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class PortSetter {
+public class PortSetterBackup implements IProcessBehaviour{
 
     private final Service service;
 
-    public PortSetter(Service service) {
+    public PortSetterBackup(Service service) {
 
         this.service = service;
     }
@@ -174,7 +174,7 @@ public class PortSetter {
                 }).filter(entry -> {
                     IServer server = entry.getValue();
                     String port = getActualPort(server);
-                    return constant.equals(Constants.ALL) || (constant.equals(Constants.ONLY_AUTO) && port.equals("-"));
+                    return constant.equals(Constants.ALL) || (constant.equals(Constants.ONLY_AUTO) && port.equals(Constants.DASH));
                 }).collect(Collectors.toMap(
                         Map.Entry::getValue,
                         entry -> {
@@ -442,7 +442,7 @@ public class PortSetter {
 
         }
 
-        return "-";
+        return Constants.DASH;
     }
 
     private String getRunningPort(IServer server) {
@@ -465,7 +465,7 @@ public class PortSetter {
             throw new RuntimeException(e);
         }
 
-        return "-";
+        return Constants.DASH;
     }
 
     private List<Integer> getRunningPorts(Map<String, IServer> serverMap) {
@@ -482,5 +482,10 @@ public class PortSetter {
                 .filter(port -> port.matches("\\d+"))
                 .map(Integer::valueOf)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void process() throws SDKException {
+
     }
 }

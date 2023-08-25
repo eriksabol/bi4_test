@@ -13,7 +13,7 @@ public class Helper {
                 String inputString = scanner.next().toLowerCase();
                 if (!inputString.isEmpty()) {
                     if (inputString.equals("b") || inputString.equals("back")) {
-                        return -1; // Return a special value for 'B' or 'b'
+                        return -1;
                     }
                     int input = Integer.parseInt(inputString);
                     if (input >= min && input <= max && (additionalCheck == null || additionalCheck.test(input))) {
@@ -72,6 +72,10 @@ public class Helper {
 
     }
 
-
+    public static void printEmptyLines(int count) {
+        for (int i = 0; i < count; i++) {
+            System.out.println();
+        }
+    }
 }
 
