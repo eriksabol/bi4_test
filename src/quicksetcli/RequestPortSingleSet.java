@@ -43,7 +43,7 @@ public class RequestPortSingleSet extends BaseCommand{
         System.out.print("Choose new Request Port [6401-6499]: ");
         int newRequestPort = Helper.getIntInput(scanner, 6401, 6499,
                 port -> !runningPorts.contains(port) && !actualPorts.contains(port),   // output from the function is an input for this predicate
-                "Your request port is already taken or currently set on another server! Please choose another one");
+                "Your request port is already taken or currently set on another server! Please choose another one: ");
 
         displayServerSummary(selectedServer, newRequestPort);
 

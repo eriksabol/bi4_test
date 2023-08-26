@@ -10,6 +10,6 @@ public class Constants {
     public static final Integer CMS_REQUEST_PORT = 6401;
     public static final String VIEW_MENU_OPTION = "View";
     public static final String MODIFY_SINGLE_SERVER_MENU_OPTION = "Modify single server";
-    public static final String MODIFY_MULTIPLE_SERVERS_MENU_OPTION = "Modify multiple servers";
+    public static final String MODIFY_MULTIPLE_SERVERS_MENU_OPTION = "Auto-modify multiple servers";
     public static final String BACK_MENU_OPTION = "← Back";
 }

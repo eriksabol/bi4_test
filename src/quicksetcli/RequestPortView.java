@@ -8,6 +8,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static quicksetcli.Helper.*;
+
 public class RequestPortView extends BaseCommand{
 
     private final Map<String, IServer> serverMap;
@@ -34,7 +36,7 @@ public class RequestPortView extends BaseCommand{
         formatterMap.put("setMethod", 15);
         formatterMap.put("actualPort", 12);
 
-        Helper.printOverallHeader(formatterMap);
+        printOverallHeader(formatterMap);
 
         AtomicInteger increment = new AtomicInteger(0);
         serverMap.keySet().stream()
@@ -45,15 +47,15 @@ public class RequestPortView extends BaseCommand{
 
                     try {
 
-                        Helper.appendValueToBuffer(formatterMap, stringBuffer, "ID", String.valueOf(increment.getAndIncrement()));
-                        Helper.appendValueToBuffer(formatterMap, stringBuffer, "stale", server.getRequiresRestart() ? "  *" : "");
-                        Helper.appendValueToBuffer(formatterMap, stringBuffer, "serverTitle", server.getTitle());
-                        Helper.appendValueToBuffer(formatterMap, stringBuffer, "hostname", server.getSIAHostname());
-                        Helper.appendValueToBuffer(formatterMap, stringBuffer, "serverStatus", server.getState().toString());
-                        Helper.appendValueToBuffer(formatterMap, stringBuffer, "serverState", server.isDisabled() ? "Disabled" : "Enabled");
-                        Helper.appendValueToBuffer(formatterMap, stringBuffer, "runningPort", getRunningPort(server));
-                        Helper.appendValueToBuffer(formatterMap, stringBuffer, "setMethod", getPortSetMethod(serverExecProps.getArgs()));
-                        Helper.appendValueToBuffer(formatterMap, stringBuffer, "actualPort", getActualPort(server));
+                        appendValueToBuffer(formatterMap, stringBuffer, "ID", String.valueOf(increment.getAndIncrement()));
+                        appendValueToBuffer(formatterMap, stringBuffer, "stale", server.getRequiresRestart() ? "  *" : "");
+                        appendValueToBuffer(formatterMap, stringBuffer, "serverTitle", server.getTitle());
+                        appendValueToBuffer(formatterMap, stringBuffer, "hostname", server.getSIAHostname());
+                        appendValueToBuffer(formatterMap, stringBuffer, "serverStatus", server.getState().toString());
+                        appendValueToBuffer(formatterMap, stringBuffer, "serverState", server.isDisabled() ? "Disabled" : "Enabled");
+                        appendValueToBuffer(formatterMap, stringBuffer, "runningPort", getRunningPort(server));
+                        appendValueToBuffer(formatterMap, stringBuffer, "setMethod", getPortSetMethod(serverExecProps.getArgs()));
+                        appendValueToBuffer(formatterMap, stringBuffer, "actualPort", getActualPort(server));
 
                     } catch (SDKException e) {
                         throw new RuntimeException(e);
@@ -63,7 +65,7 @@ public class RequestPortView extends BaseCommand{
                 })
                 .forEach(System.out::println);
 
-        System.out.println();
+        printEmptyLines(1);
 
     }
 

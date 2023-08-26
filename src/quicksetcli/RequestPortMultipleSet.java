@@ -28,6 +28,16 @@ public class RequestPortMultipleSet extends BaseCommand {
         Map<String, HashSet<Integer>> hostToAvailablePorts = getHostWithAvailablePorts(constant);
         Map<IServer, Integer> serverWithPort = getServerWithPort(serverMap, hostToAvailablePorts, constant);
 
+        for (Map.Entry<String, HashSet<Integer>> entry : hostToAvailablePorts.entrySet()) {
+            System.out.println("Host: " + entry.getKey());
+            System.out.println("Available Ports: " + entry.getValue());
+        }
+
+        for (Map.Entry<IServer, Integer> entry : serverWithPort.entrySet()) {
+            System.out.println("Host: " + entry.getKey().getTitle());
+            System.out.println("Available Ports: " + entry.getValue());
+        }
+
         Map<String, Integer> formatterMap = new LinkedHashMap<>();
         formatterMap.put("serverTitle", 50);
         formatterMap.put("port", 12);
@@ -41,12 +51,12 @@ public class RequestPortMultipleSet extends BaseCommand {
 
         } else {
 
-            serverWithPort.keySet().stream()
-                    .map(server -> {
+            serverWithPort.entrySet().stream()
+                    .map(entry -> {
                         StringBuffer stringBuffer = new StringBuffer();
 
-                        Helper.appendValueToBuffer(formatterMap, stringBuffer, "serverTitle", server.getTitle());
-                        Helper.appendValueToBuffer(formatterMap, stringBuffer, "port", getActualPort(server));
+                        Helper.appendValueToBuffer(formatterMap, stringBuffer, "serverTitle", entry.getKey().getTitle());
+                        Helper.appendValueToBuffer(formatterMap, stringBuffer, "port", String.valueOf(entry.getValue()));
 
                         return stringBuffer.toString();
                     })
@@ -112,7 +122,11 @@ public class RequestPortMultipleSet extends BaseCommand {
             int startPort = 6401;
             int endPort = 6499;
 
-            mergedHashSet.addAll(Arrays.asList(Constants.SIA_PORT, Constants.WACS_PORT, 6411));
+            List<Integer> additionalExcludedPorts = Arrays.asList(Constants.SIA_PORT, Constants.WACS_PORT, Constants.CMS_REQUEST_PORT);
+
+//          Adding other ports for exclusion
+            mergedHashSet.addAll(additionalExcludedPorts);
+            myRunningPortHashSet.addAll(additionalExcludedPorts);
 
             if (constant.equals(Constants.ONLY_AUTO)) {
 
@@ -144,7 +158,6 @@ public class RequestPortMultipleSet extends BaseCommand {
         merged.addAll(myActualPorts);
 
         return merged;
-
     }
 
     private Map<IServer, Integer> getServerWithPort(Map<String, IServer> serverMap, Map<String, HashSet<Integer>> hostToAvailablePorts, String constant) {

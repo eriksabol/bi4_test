@@ -19,7 +19,11 @@ public class Helper {
                     if (input >= min && input <= max && (additionalCheck == null || additionalCheck.test(input))) {
                         return input;
                     } else {
-                        System.out.print(errorMessage + " Please enter a number between " + min + " and " + max + ": ");
+                        if (additionalCheck != null && !additionalCheck.test(input)) {
+                            System.out.print(errorMessage + " ");
+                        } else {
+                            System.out.print("Please enter a number between " + min + " and " + max + ": ");
+                        }
                     }
                 } else {
                     System.out.print("Invalid choice. Please enter a non-empty number: ");
