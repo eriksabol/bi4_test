@@ -8,7 +8,7 @@ import com.crystaldecisions.sdk.plugin.desktop.licensekey.ILicenseKey;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class LicenseChecker implements IProcessBehaviour {
+public class LicenseChecker extends BaseCommand {
 
     private final Service service;
 
@@ -17,18 +17,23 @@ public class LicenseChecker implements IProcessBehaviour {
     }
 
     @Override
-    public void process() throws SDKException {
+    public void execute() {
 
         String licenseQuery = "SELECT * FROM CI_SYSTEMOBJECTS WHERE SI_PROGID='CrystalEnterprise.LicenseKey'";
 
-        IInfoObjects myInfoObjects = this.service.getMyInfoStore().query(licenseQuery);
+        IInfoObjects myInfoObjects = null;
+        try {
+            myInfoObjects = this.service.getMyInfoStore().query(licenseQuery);
+        } catch (SDKException e) {
+            throw new RuntimeException(e);
+        }
 
         //Definition of fields
         Map<String, Integer> formatterMap = new LinkedHashMap<>();
         formatterMap.put("licenseKey", 50);
         formatterMap.put("expiresOn", 50);
 
-        this.printOverallHeader(myInfoObjects, formatterMap);
+        Helper.printOverallHeader(formatterMap);
 
         for(Object e : myInfoObjects) {
 
@@ -37,8 +42,8 @@ public class LicenseChecker implements IProcessBehaviour {
 
             StringBuffer stringBuffer = new StringBuffer();
 
-            this.appendValueToBuffer(formatterMap, stringBuffer, "licenseKey", licenseKey.getLicenseKey());
-            this.appendValueToBuffer(formatterMap, stringBuffer, "expiresOn", licenseKey.getExpiryDate().toString());
+            Helper.appendValueToBuffer(formatterMap, stringBuffer, "licenseKey", licenseKey.getLicenseKey());
+            Helper.appendValueToBuffer(formatterMap, stringBuffer, "expiresOn", licenseKey.getExpiryDate().toString());
 
             System.out.println(stringBuffer);
 
