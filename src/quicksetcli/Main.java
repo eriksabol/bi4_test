@@ -73,7 +73,7 @@ public class Main {
 
                 case 1:
                     printEmptyLines(1);
-                    MenuRequestPortModify menuModifyRequestPort = new MenuRequestPortModify(scanner, service);
+                    MenuRequestPorts menuModifyRequestPort = new MenuRequestPorts(scanner, service);
                     menuModifyRequestPort.view();
                     break;
 

@@ -28,16 +28,6 @@ public class RequestPortMultipleSet extends BaseCommand {
         Map<String, HashSet<Integer>> hostToAvailablePorts = getHostWithAvailablePorts(constant);
         Map<IServer, Integer> serverWithPort = getServerWithPort(serverMap, hostToAvailablePorts, constant);
 
-        for (Map.Entry<String, HashSet<Integer>> entry : hostToAvailablePorts.entrySet()) {
-            System.out.println("Host: " + entry.getKey());
-            System.out.println("Available Ports: " + entry.getValue());
-        }
-
-        for (Map.Entry<IServer, Integer> entry : serverWithPort.entrySet()) {
-            System.out.println("Host: " + entry.getKey().getTitle());
-            System.out.println("Available Ports: " + entry.getValue());
-        }
-
         Map<String, Integer> formatterMap = new LinkedHashMap<>();
         formatterMap.put("serverTitle", 50);
         formatterMap.put("port", 12);

@@ -52,7 +52,7 @@ public class Helper {
     public static void printHeaderLine(Map<String, Integer> formatterMap) {
 
         formatterMap.forEach((key, value) -> System.out.printf("%-" + value + "s", key));
-        System.out.println();
+        printEmptyLines(1);
 
     }
 

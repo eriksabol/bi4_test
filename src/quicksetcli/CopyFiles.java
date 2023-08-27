@@ -1,4 +1,4 @@
-package test;
+package quicksetcli;
 
 import com.crystaldecisions.sdk.exception.SDKException;
 import com.crystaldecisions.sdk.framework.CrystalEnterprise;
@@ -7,6 +7,8 @@ import com.crystaldecisions.sdk.framework.ISessionMgr;
 import com.crystaldecisions.sdk.occa.infostore.*;
 
 import java.io.File;
+
+import static quicksetcli.Helper.*;
 
 public class CopyFiles {
 
@@ -30,7 +32,7 @@ public class CopyFiles {
                 mySession = myLogon();
 
                 System.out.println(">>> Logged in to " + mySession.getCMSName() + " <<<");
-                System.out.println();
+                printEmptyLines(1);
                 IInfoStore infoStore = (IInfoStore) mySession.getService("InfoStore");
 
                 // For different reports please change si_kind to corresponding object - it has to contain SI_FILES

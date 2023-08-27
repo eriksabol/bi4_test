@@ -13,14 +13,14 @@ import static quicksetcli.Helper.getIntInput;
 import static quicksetcli.Helper.printEmptyLines;
 
 
-public class MenuRequestPortModify implements Menu {
+public class MenuRequestPorts implements Menu {
 
     private final Scanner scanner;
 
     private Map<String, IServer> serverMap;
     private final Service service;
 
-    public MenuRequestPortModify(Scanner scanner, Service service) {
+    public MenuRequestPorts(Scanner scanner, Service service) {
         this.scanner = scanner;
         this.service = service;
         this.serverMap = initializeServerMap();
@@ -99,7 +99,7 @@ public class MenuRequestPortModify implements Menu {
             throw new RuntimeException(e);
         }
         System.out.print("done.\n");
-        System.out.println();
+        printEmptyLines(1);
 
         return serverMap;
 

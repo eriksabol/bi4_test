@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import static quicksetcli.Helper.*;
+
 public class RequestPortSingleSet extends BaseCommand{
 
     private final Scanner scanner;
@@ -22,7 +24,7 @@ public class RequestPortSingleSet extends BaseCommand{
     public void execute() {
 
         System.out.print("Choose Server ID: ");
-        int serverID = Helper.getIntInput(scanner, 0, serverMap.size() - 1, null, null);
+        int serverID = getIntInput(scanner, 0, serverMap.size() - 1, null, null);
 
         Object[] serverArray = serverMap.keySet().toArray();
         String key = (String) serverArray[serverID];
@@ -41,7 +43,7 @@ public class RequestPortSingleSet extends BaseCommand{
         List<Integer> actualPorts = getActualPorts(serverMap);
 
         System.out.print("Choose new Request Port [6401-6499]: ");
-        int newRequestPort = Helper.getIntInput(scanner, 6401, 6499,
+        int newRequestPort = getIntInput(scanner, 6401, 6499,
                 port -> !runningPorts.contains(port) && !actualPorts.contains(port),   // output from the function is an input for this predicate
                 "Your request port is already taken or currently set on another server! Please choose another one: ");
 
@@ -53,7 +55,7 @@ public class RequestPortSingleSet extends BaseCommand{
         String replacementString = "-requestport " + newRequestPort;
         String modifiedArguments = getModifiedArguments(pattern, replacementString, actualServerArguments);
 
-        Helper.askYesNoQuestion(scanner, "\nDo you want to save the new Request Port value?",
+        askYesNoQuestion(scanner, "\nDo you want to save the new Request Port value?",
                 () -> {
                     System.out.print("Saving values...");
                     serverExecProps.setArgs(modifiedArguments);
@@ -63,11 +65,11 @@ public class RequestPortSingleSet extends BaseCommand{
                         throw new RuntimeException(e);
                     }
                     System.out.print("done\n");
-                    System.out.println();
+                    printEmptyLines(1);
                 },
                 () -> {
                     System.out.println("Doing nothing!");
-                    System.out.println();
+                    printEmptyLines(1);
                 }
         );
     }
