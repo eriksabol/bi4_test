@@ -6,6 +6,8 @@ import com.crystaldecisions.sdk.occa.infostore.IInfoObjects;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static quicksetcli.Helper.*;
+
 public class UsersAndGroupsChecker extends BaseCommand {
 
     private final Service service;
@@ -39,19 +41,19 @@ public class UsersAndGroupsChecker extends BaseCommand {
         formatterMap.put("noOfUsers", 12);
         formatterMap.put("noOfGroups", 12);
 
-        System.out.println();
-        Helper.printHeaderLine(formatterMap);
-        Helper.printDashedSpacer(formatterMap);
+        printEmptyLines(1);
+        printHeaderLine(formatterMap);
+        printDashedSpacer(formatterMap);
 
             StringBuffer stringBuffer = new StringBuffer();
 
-        Helper.appendValueToBuffer(formatterMap, stringBuffer, "cluster", this.service.getMyEnterpriseSession().getClusterName());
-        Helper.appendValueToBuffer(formatterMap, stringBuffer, "noOfUsers", String.valueOf(numberOfUsers));
-        Helper.appendValueToBuffer(formatterMap, stringBuffer, "noOfGroups", String.valueOf(numberOfGroups));
+        appendValueToBuffer(formatterMap, stringBuffer, "cluster", this.service.getMyEnterpriseSession().getClusterName());
+        appendValueToBuffer(formatterMap, stringBuffer, "noOfUsers", String.valueOf(numberOfUsers));
+        appendValueToBuffer(formatterMap, stringBuffer, "noOfGroups", String.valueOf(numberOfGroups));
 
             System.out.println(stringBuffer);
 
-        Helper.printDashedSpacer(formatterMap);
+        printDashedSpacer(formatterMap);
 
     }
 

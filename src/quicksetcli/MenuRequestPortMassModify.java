@@ -18,8 +18,8 @@ public class MenuRequestPortMassModify implements Menu {
 
     public static void displayMassModifyRequestPortMenu() {
         System.out.println("Main Menu > Request Ports > Modify multiple servers:");
-        System.out.println("1 Auto-modify all servers (excl. CMS)");
-        System.out.println("2 Auto-modify servers with Auto assign (excl. CMS)");
+        System.out.println("1 Mass-modify all servers (excl. CMS)");
+        System.out.println("2 Mass-modify servers with Auto assign (excl. CMS)");
         System.out.println("b " + Constants.BACK_MENU_OPTION);
         printEmptyLines(1);
     }
