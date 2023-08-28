@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.function.Predicate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Helper {
 
@@ -34,6 +36,34 @@ public class Helper {
         }
     }
 
+    public static String validateAndExtractXmxValue(Scanner scanner) {
+
+        while (true) {
+            try {
+                String input = scanner.next();
+                String patternStr = "^(\\d+)([mMgG])$";
+                Pattern pattern = Pattern.compile(patternStr);
+                Matcher matcher = pattern.matcher(input);
+
+                if (matcher.matches()) {
+                    int value = Integer.parseInt(matcher.group(1));
+                    String unit = matcher.group(2).toLowerCase();
+
+                    if ((unit.equals("m") && value >= 64 && value <= 1024) ||
+                            (unit.equals("g") && value >= 1 && value <= 4)) {
+                        return input;
+                    } else {
+                        System.out.print("Value must be within valid range (64M - 1024M, 1G - 4G): ");
+                    }
+                } else {
+                    System.out.print("Invalid format. Use a number followed by 'm' or 'g': ");
+                }
+            } catch (Exception e) {
+                System.out.print("Unable to validate input!");
+            }
+        }
+    }
+
     public static void askYesNoQuestion(Scanner scanner, String question, Runnable yesAction, Runnable noAction) {
 
         System.out.print(question + " (yes/no): ");
@@ -44,7 +74,7 @@ public class Helper {
         } else if (userInput.equals("no")) {
             noAction.run();
         } else {
-            System.out.println("Invalid input. Please enter 'yes' or 'no'.");
+            System.out.println("Invalid input. Please enter 'yes' or 'no': ");
         }
 
     }
