@@ -1,29 +1,28 @@
 package quicksetcli;
 
-import com.businessobjects.sdk.plugin.desktop.common.IExecProps;
 import com.crystaldecisions.sdk.exception.SDKException;
 import com.crystaldecisions.sdk.plugin.desktop.server.IServer;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static quicksetcli.Helper.*;
 
-public class RequestPortView extends BaseCommand{
+public class HeapSizeView extends BaseCommand{
 
-    private final Map<String, IServer> serverMap;
+    private final Scanner scanner;
+    private Map<String, IServer> serverMap;
+    private final Service service;
 
-    public RequestPortView(Map<String, IServer> serverMap) {
-        this.serverMap = serverMap;
+    public HeapSizeView(Scanner scanner, Service service) {
+        this.scanner = scanner;
+        this.service = service;
+        this.serverMap = initializeServerMap(service, Constants.SERVER_QUERY);
     }
 
-    @Override
-    public void execute() {
-        displayPortTable(this.serverMap);
-    }
-
-    private void displayPortTable(Map<String, IServer> serverMap) {
+    private void displayHeapSizeTable(Map<String, IServer> serverMap) {
 
         Map<String, Integer> formatterMap = new LinkedHashMap<>();
         formatterMap.put("ID", 4);
@@ -32,9 +31,8 @@ public class RequestPortView extends BaseCommand{
         formatterMap.put("hostname", 20);
         formatterMap.put("serverStatus", 25);
         formatterMap.put("serverState", 13);
-        formatterMap.put("runningPort", 15);    //  activePort
-        formatterMap.put("setMethod", 15);
-        formatterMap.put("actualPort", 12); // configuredPort
+        formatterMap.put("activeXmx", 15);
+        formatterMap.put("setXmx", 15);
 
         printOverallHeader(formatterMap);
 
@@ -42,7 +40,6 @@ public class RequestPortView extends BaseCommand{
         serverMap.keySet().stream()
                 .map(key -> {
                     IServer server = serverMap.get(key);
-                    IExecProps serverExecProps = getExecProps(server);
                     StringBuffer stringBuffer = new StringBuffer();
 
                     try {
@@ -53,9 +50,8 @@ public class RequestPortView extends BaseCommand{
                         appendValueToBuffer(formatterMap, stringBuffer, "hostname", server.getSIAHostname());
                         appendValueToBuffer(formatterMap, stringBuffer, "serverStatus", server.getState().toString());
                         appendValueToBuffer(formatterMap, stringBuffer, "serverState", server.isDisabled() ? "Disabled" : "Enabled");
-                        appendValueToBuffer(formatterMap, stringBuffer, "runningPort", getRunningPort(server));
-                        appendValueToBuffer(formatterMap, stringBuffer, "setMethod", getPortSetMethod(serverExecProps.getArgs()));
-                        appendValueToBuffer(formatterMap, stringBuffer, "actualPort", getActualPort(server));
+                        appendValueToBuffer(formatterMap, stringBuffer, "activeXmx", getActiveXmx(server));
+                        appendValueToBuffer(formatterMap, stringBuffer, "setXmx", getConfiguredXmx(server));
 
                     } catch (SDKException e) {
                         throw new RuntimeException(e);
@@ -69,12 +65,8 @@ public class RequestPortView extends BaseCommand{
 
     }
 
-    private String getPortSetMethod(String actualServerExecProps) {
-
-        if (actualServerExecProps.contains("-requestport")) return "Manual";
-
-        return "Auto";
-
+    @Override
+    public void execute() {
+        displayHeapSizeTable(serverMap);
     }
-
 }

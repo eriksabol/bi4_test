@@ -4,14 +4,19 @@ import com.businessobjects.sdk.plugin.desktop.common.IExecProps;
 import com.businessobjects.sdk.plugin.desktop.common.IMetric;
 import com.businessobjects.sdk.plugin.desktop.common.IMetrics;
 import com.crystaldecisions.sdk.exception.SDKException;
+import com.crystaldecisions.sdk.occa.infostore.IInfoObject;
+import com.crystaldecisions.sdk.occa.infostore.IInfoObjects;
 import com.crystaldecisions.sdk.plugin.desktop.server.IServer;
 import com.crystaldecisions.sdk.plugin.desktop.server.IServerMetrics;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import static quicksetcli.Helper.printEmptyLines;
 
 public abstract class BaseCommand implements Command {
 
@@ -96,4 +101,49 @@ public abstract class BaseCommand implements Command {
 
         return modifiedServerExecProps;
     }
+
+    public Map<String, IServer> initializeServerMap(Service service, String serverQuery) {
+
+        Map<String, IServer> serverMap = new LinkedHashMap<>();
+
+        IInfoObjects myInfoObjects;
+
+        System.out.print("Initializing server map...");
+
+        try {
+            myInfoObjects = service.getMyInfoStore().query(serverQuery);
+
+            for (Object e : myInfoObjects) {
+
+                IInfoObject myInfoObject = (IInfoObject) e;
+                IServer server = (IServer) myInfoObject;
+                serverMap.put(server.getCUID(), server);
+
+            }
+
+        } catch (SDKException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.print("done.\n");
+        printEmptyLines(1);
+
+        return serverMap;
+
+    }
+
+    public String getConfiguredXmx(IServer server) {
+        IExecProps serverExecProps = getExecProps(server);
+        Pattern patternXmx = Pattern.compile("Xmx[0-9]{1,5}[m,g]{1}");
+        Matcher matcherXmx = patternXmx.matcher(serverExecProps.getArgs());
+
+        return matcherXmx.find() ? matcherXmx.group() : Constants.DASH;
+    }
+
+    public String getActiveXmx(IServer server) {
+        Pattern patternXmx = Pattern.compile("Xmx[0-9]{1,5}[m,g]{1}");
+        Matcher matcherSetXmx = patternXmx.matcher(server.getCurrentCommandLine());
+
+        return matcherSetXmx.find() ? matcherSetXmx.group() : Constants.DASH;
+    }
+
 }

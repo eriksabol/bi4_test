@@ -16,7 +16,6 @@ import static quicksetcli.Helper.printEmptyLines;
 public class MenuRequestPorts implements Menu {
 
     private final Scanner scanner;
-
     private Map<String, IServer> serverMap;
     private final Service service;
 

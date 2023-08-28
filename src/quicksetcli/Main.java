@@ -52,7 +52,7 @@ public class Main {
     }
 
     private static void printProgramHeader() {
-        String welcomeMessage = "--- Welcome to BI4 QUICKSET CLI tool v1.10 ---";
+        String welcomeMessage = "--- Welcome to BI4 QUICKSET CLI tool v1.20 ---";
         final int welcomeLength = welcomeMessage.length();
         System.out.println(String.join("", Collections.nCopies(welcomeLength, "-")));
         System.out.println(welcomeMessage);
@@ -79,8 +79,8 @@ public class Main {
 
                 case 2:
                     printEmptyLines(1);
-                    HeapChecker heapChecker = new HeapChecker(service);
-                    heapChecker.execute();
+                    MenuHeapSize menuHeapSize = new MenuHeapSize(scanner, service);
+                    menuHeapSize.view();
                     break;
 
                 case 3:
@@ -115,7 +115,7 @@ public class Main {
         printEmptyLines(1);
         System.out.println("Main Menu:");
         System.out.println("1 Request Ports [+]");
-        System.out.println("2 Heap Size");
+        System.out.println("2 Heap Size [+]");
         System.out.println("3 License Key");
         System.out.println("4 Services");
         System.out.println("5 Users and Groups");
