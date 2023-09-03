@@ -8,6 +8,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static quicksetcli.Helper.*;
 import static quicksetcli.Helper.printEmptyLines;
 
 public class RequestPortMultipleSet extends BaseCommand {
@@ -32,7 +33,7 @@ public class RequestPortMultipleSet extends BaseCommand {
         formatterMap.put("serverTitle", 50);
         formatterMap.put("port", 12);
 
-        Helper.printOverallHeader(formatterMap);
+        printOverallHeader(formatterMap);
 
         if (serverWithPort.isEmpty()) {
 
@@ -45,14 +46,14 @@ public class RequestPortMultipleSet extends BaseCommand {
                     .map(entry -> {
                         StringBuffer stringBuffer = new StringBuffer();
 
-                        Helper.appendValueToBuffer(formatterMap, stringBuffer, "serverTitle", entry.getKey().getTitle());
-                        Helper.appendValueToBuffer(formatterMap, stringBuffer, "port", String.valueOf(entry.getValue()));
+                        appendValueToBuffer(formatterMap, stringBuffer, "serverTitle", entry.getKey().getTitle());
+                        appendValueToBuffer(formatterMap, stringBuffer, "port", String.valueOf(entry.getValue()));
 
                         return stringBuffer.toString();
                     })
                     .forEach(System.out::println);
 
-            Helper.askYesNoQuestion(scanner, "\nWould you like to save these Request Port values?",
+            askYesNoQuestion(scanner, "\nWould you like to save these Request Port values?",
                     () -> {
                         System.out.print("Saving values...");
 
@@ -67,9 +68,6 @@ public class RequestPortMultipleSet extends BaseCommand {
                                 String replacementString = "-requestport " + port;
 
                                 String modifiedArguments = getModifiedArguments(pattern, replacementString, serverArgs);
-
-                                System.out.println(serverExecProps.getArgs());
-                                System.out.println(modifiedArguments);
 
                                 serverExecProps.setArgs(modifiedArguments);
                                 currentServer.save();
@@ -114,7 +112,6 @@ public class RequestPortMultipleSet extends BaseCommand {
 
             List<Integer> additionalExcludedPorts = Arrays.asList(Constants.SIA_PORT, Constants.WACS_PORT, Constants.CMS_REQUEST_PORT);
 
-//          Adding other ports for exclusion
             mergedHashSet.addAll(additionalExcludedPorts);
             myRunningPortHashSet.addAll(additionalExcludedPorts);
 

@@ -11,6 +11,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import static quicksetcli.Helper.*;
+
 public class ServicesChecker extends BaseCommand {
 
     private final Service service;
@@ -37,7 +39,7 @@ public class ServicesChecker extends BaseCommand {
         formatterMap.put("hostedServices", 62);
         formatterMap.put("serviceCUID", 25);
 
-        Helper.printOverallHeader(formatterMap);
+        printOverallHeader(formatterMap);
 
         for (Object e : myInfoObjects) {
 
@@ -74,15 +76,15 @@ public class ServicesChecker extends BaseCommand {
 
                 if (!serverNameAlreadyDisplayed) {
 
-                    Helper.appendValueToBuffer(formatterMap, stringBuffer, "serverTitle", serverTitle);
-                    Helper.appendValueToBuffer(formatterMap, stringBuffer, "hostedServices", serviceInfoObject.getDescription());
-                    Helper.appendValueToBuffer(formatterMap, stringBuffer, "serviceCUID", serviceCUID);
+                    appendValueToBuffer(formatterMap, stringBuffer, "serverTitle", serverTitle);
+                    appendValueToBuffer(formatterMap, stringBuffer, "hostedServices", serviceInfoObject.getDescription());
+                    appendValueToBuffer(formatterMap, stringBuffer, "serviceCUID", serviceCUID);
                     serverNameAlreadyDisplayed = true;
                 } else {
 
-                    Helper.appendValueToBuffer(formatterMap, stringBuffer, "serverTitle", "");
-                    Helper.appendValueToBuffer(formatterMap, stringBuffer, "hostedServices", serviceInfoObject.getDescription());
-                    Helper.appendValueToBuffer(formatterMap, stringBuffer, "serviceCUID", serviceCUID);
+                    appendValueToBuffer(formatterMap, stringBuffer, "serverTitle", "");
+                    appendValueToBuffer(formatterMap, stringBuffer, "hostedServices", serviceInfoObject.getDescription());
+                    appendValueToBuffer(formatterMap, stringBuffer, "serviceCUID", serviceCUID);
 
                 }
 
@@ -90,7 +92,7 @@ public class ServicesChecker extends BaseCommand {
 
             }
 
-            Helper.printDashedSpacer(formatterMap);
+            printDashedSpacer(formatterMap);
 
         }
 

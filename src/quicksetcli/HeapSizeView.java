@@ -5,20 +5,15 @@ import com.crystaldecisions.sdk.plugin.desktop.server.IServer;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static quicksetcli.Helper.*;
 
 public class HeapSizeView extends BaseCommand{
 
-    private final Scanner scanner;
     private Map<String, IServer> serverMap;
-    private final Service service;
 
-    public HeapSizeView(Scanner scanner, Service service) {
-        this.scanner = scanner;
-        this.service = service;
+    public HeapSizeView(Service service) {
         this.serverMap = initializeServerMap(service, Constants.SERVER_QUERY);
     }
 

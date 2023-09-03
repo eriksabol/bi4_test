@@ -1,6 +1,5 @@
 package quicksetcli;
 
-import com.businessobjects.sdk.plugin.desktop.common.IExecProps;
 import com.crystaldecisions.sdk.exception.SDKException;
 import com.crystaldecisions.sdk.plugin.desktop.server.IServer;
 
@@ -42,7 +41,6 @@ public class RequestPortView extends BaseCommand{
         serverMap.keySet().stream()
                 .map(key -> {
                     IServer server = serverMap.get(key);
-                    IExecProps serverExecProps = getExecProps(server);
                     StringBuffer stringBuffer = new StringBuffer();
 
                     try {
@@ -54,7 +52,7 @@ public class RequestPortView extends BaseCommand{
                         appendValueToBuffer(formatterMap, stringBuffer, "serverStatus", server.getState().toString());
                         appendValueToBuffer(formatterMap, stringBuffer, "serverState", server.isDisabled() ? "Disabled" : "Enabled");
                         appendValueToBuffer(formatterMap, stringBuffer, "runningPort", getRunningPort(server));
-                        appendValueToBuffer(formatterMap, stringBuffer, "setMethod", getPortSetMethod(serverExecProps.getArgs()));
+                        appendValueToBuffer(formatterMap, stringBuffer, "setMethod", getPortSetMethod(server));
                         appendValueToBuffer(formatterMap, stringBuffer, "actualPort", getActualPort(server));
 
                     } catch (SDKException e) {
@@ -66,15 +64,5 @@ public class RequestPortView extends BaseCommand{
                 .forEach(System.out::println);
 
         printEmptyLines(1);
-
     }
-
-    private String getPortSetMethod(String actualServerExecProps) {
-
-        if (actualServerExecProps.contains("-requestport")) return "Manual";
-
-        return "Auto";
-
-    }
-
 }

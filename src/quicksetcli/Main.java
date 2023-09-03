@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import static quicksetcli.Helper.*;
 import static quicksetcli.Helper.printEmptyLines;
 
 public class Main {
@@ -52,7 +53,7 @@ public class Main {
     }
 
     private static void printProgramHeader() {
-        String welcomeMessage = "--- Welcome to BI4 QUICKSET CLI tool v1.20 ---";
+        String welcomeMessage = "--- Welcome to BI4 QUICKSET tool v1.20 ---";
         final int welcomeLength = welcomeMessage.length();
         System.out.println(String.join("", Collections.nCopies(welcomeLength, "-")));
         System.out.println(welcomeMessage);
@@ -67,7 +68,7 @@ public class Main {
 
             displayMainMenu();
             System.out.print("Enter your choice: ");
-            int userChoice = Helper.getIntInput(scanner, 1, 5, null, null);
+            int userChoice = getIntInput(scanner, 1, 5, null, null);
 
             switch (userChoice) {
 

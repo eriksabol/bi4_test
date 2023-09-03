@@ -33,7 +33,7 @@ public class MenuHeapSize implements Menu {
             switch (heapSizeMenuChoice) {
                 case 1:
                     printEmptyLines(1);
-                    HeapSizeView heapSizeView = new HeapSizeView(scanner, service);
+                    HeapSizeView heapSizeView = new HeapSizeView(service);
                     heapSizeView.execute();
                     break;
                 case 2:

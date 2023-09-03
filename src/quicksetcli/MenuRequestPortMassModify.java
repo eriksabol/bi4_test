@@ -5,6 +5,7 @@ import com.crystaldecisions.sdk.plugin.desktop.server.IServer;
 import java.util.Map;
 import java.util.Scanner;
 
+import static quicksetcli.Helper.*;
 import static quicksetcli.Helper.printEmptyLines;
 
 public class MenuRequestPortMassModify implements Menu {
@@ -29,7 +30,7 @@ public class MenuRequestPortMassModify implements Menu {
 
             displayMassModifyRequestPortMenu();
             System.out.print("Enter your choice: ");
-            int requestPortMenuChoice = Helper.getIntInput(scanner, 1, 2, null, null);
+            int requestPortMenuChoice = getIntInput(scanner, 1, 2, null, null);
 
             switch (requestPortMenuChoice) {
                 case 1:
