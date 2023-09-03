@@ -12,6 +12,7 @@ import com.crystaldecisions.sdk.plugin.desktop.server.IServerMetrics;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -141,9 +142,25 @@ public abstract class BaseCommand implements Command {
 
     public String getActiveXmx(IServer server) {
         Pattern patternXmx = Pattern.compile("Xmx[0-9]{1,5}[m,g]{1}");
-        Matcher matcherSetXmx = patternXmx.matcher(server.getCurrentCommandLine());
+        String currentCommandLine = server.getCurrentCommandLine();
 
-        return matcherSetXmx.find() ? matcherSetXmx.group() : Constants.DASH;
+        if(Objects.isNull(currentCommandLine)) {
+            return Constants.DASH;
+        }
+        else {
+            Matcher matcherSetXmx = patternXmx.matcher(currentCommandLine);
+            return matcherSetXmx.find() ? matcherSetXmx.group() : Constants.DASH;
+        }
     }
 
+    public String getPortSetMethod(IServer server) {
+
+        IExecProps serverExecProps = getExecProps(server);
+        String actualServerExecProps = serverExecProps.getArgs();
+
+        if (actualServerExecProps.contains("-requestport")) return "Manual";
+
+        return "Auto";
+
+    }
 }

@@ -8,6 +8,8 @@ import com.crystaldecisions.sdk.plugin.desktop.licensekey.ILicenseKey;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static quicksetcli.Helper.*;
+
 public class LicenseChecker extends BaseCommand {
 
     private final Service service;
@@ -21,7 +23,7 @@ public class LicenseChecker extends BaseCommand {
 
         String licenseQuery = "SELECT * FROM CI_SYSTEMOBJECTS WHERE SI_PROGID='CrystalEnterprise.LicenseKey'";
 
-        IInfoObjects myInfoObjects = null;
+        IInfoObjects myInfoObjects;
         try {
             myInfoObjects = this.service.getMyInfoStore().query(licenseQuery);
         } catch (SDKException e) {
@@ -31,9 +33,9 @@ public class LicenseChecker extends BaseCommand {
         //Definition of fields
         Map<String, Integer> formatterMap = new LinkedHashMap<>();
         formatterMap.put("licenseKey", 50);
-        formatterMap.put("expiresOn", 50);
+        formatterMap.put("expiresOn", 36);
 
-        Helper.printOverallHeader(formatterMap);
+        printOverallHeader(formatterMap);
 
         for(Object e : myInfoObjects) {
 
@@ -42,8 +44,8 @@ public class LicenseChecker extends BaseCommand {
 
             StringBuffer stringBuffer = new StringBuffer();
 
-            Helper.appendValueToBuffer(formatterMap, stringBuffer, "licenseKey", licenseKey.getLicenseKey());
-            Helper.appendValueToBuffer(formatterMap, stringBuffer, "expiresOn", licenseKey.getExpiryDate().toString());
+            appendValueToBuffer(formatterMap, stringBuffer, "licenseKey", licenseKey.getLicenseKey());
+            appendValueToBuffer(formatterMap, stringBuffer, "expiresOn", licenseKey.getExpiryDate().toString());
 
             System.out.println(stringBuffer);
 
