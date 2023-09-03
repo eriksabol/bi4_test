@@ -12,13 +12,13 @@ import static quicksetcli.Helper.*;
 
 public class CopyFiles {
 
-    private static final String TEST_FOLDER = "C:\\Users\\esabol\\Documents\\Restore_folder\\APPS\\Java_testing_folder\\";
+    private static final String TEST_FOLDER = "C:\\path\\to\\folder\\";
     private static IInfoObject privateInfoObject;
 
     private static IEnterpriseSession myLogon() throws SDKException {
 
         ISessionMgr sessionManager = CrystalEnterprise.getSessionMgr();
-        return sessionManager.logon("Administrator", "Penguin7", "linux-lbji:6400", "secEnterprise");
+        return sessionManager.logon("Administrator", "pass", "hostname:6400", "secEnterprise");
 
     }
 
