@@ -30,24 +30,9 @@
   <component name="ChangeListManager">
     <list default="true" id="cd19de14-6f9c-497f-9339-ecfef5c4b75d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/BaseCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/BaseCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/HeapSizeView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/HeapSizeView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/LicenseChecker.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/LicenseChecker.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/MenuHeapSize.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/MenuHeapSize.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/MenuRequestPortMassModify.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/MenuRequestPortMassModify.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/RequestPortMultipleSet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/RequestPortMultipleSet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/RequestPortView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/RequestPortView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/ServicesChecker.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/ServicesChecker.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/quicksetcli/BaseCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/BaseCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/quicksetcli/HeapSizeView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/HeapSizeView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/quicksetcli/LicenseChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/LicenseChecker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/quicksetcli/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/quicksetcli/MenuHeapSize.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/MenuHeapSize.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/quicksetcli/MenuRequestPortMassModify.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/MenuRequestPortMassModify.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/Helper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/quicksetcli/RequestPortMultipleSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/RequestPortMultipleSet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/quicksetcli/RequestPortView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/RequestPortView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/quicksetcli/ServicesChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/ServicesChecker.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +91,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "refactoring__a__bit",
+    "git-widget-placeholder": "various__refactoring",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/Users/Admin/Documents/APPS/Java_JDK/BI42_SP7_jars",
     "project.structure.last.edited": "Project",
