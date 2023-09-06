@@ -50,10 +50,10 @@ public class Helper {
                     String unit = matcher.group(2).toLowerCase();
 
                     if ((unit.equals("m") && value >= 64 && value <= 1024) ||
-                            (unit.equals("g") && value >= 1 && value <= 4)) {
+                            (unit.equals("g") && value >= 1 && value <= 64)) {
                         return input;
                     } else {
-                        System.out.print("Value must be within valid range (64M - 1024M, 1G - 4G): ");
+                        System.out.print("Value must be within valid range (64M - 1024M, 1G - 64G): ");
                     }
                 } else {
                     System.out.print("Invalid format. Use a number followed by 'm' or 'g': ");
