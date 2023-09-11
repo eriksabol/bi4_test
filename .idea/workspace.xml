@@ -29,10 +29,52 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd19de14-6f9c-497f-9339-ecfef5c4b75d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/quicksetcli/commands/RequestPortMultipleSet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/quicksetcli/menu/MenuMain.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/quicksetcli/resources/request_port.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/bi4_test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/bi4_test.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/RequestPortMultipleSet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/RequestPortMultipleSet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/quicksetcli/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/Helper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/quicksetcli/RequestPortMultipleSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/RequestPortMultipleSet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/BaseCommand.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/Command.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/Constants.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/CopyFiles.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/HeapSizeSingleSet.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/HeapSizeView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/Helper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/IncorrectArgumentException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/LicenseChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/Menu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/MenuHeapSize.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/MenuRequestPortMassModify.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/MenuRequestPorts.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/RequestPortMultipleSet.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/RequestPortSingleSet.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/RequestPortView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/Service.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/Service.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/ServicesChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/bi4_test/quicksetcli/UsersAndGroupsChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/BaseCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/commands/BaseCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/commands/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/others/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/CopyFiles.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/HeapSizeSingleSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/commands/HeapSizeSingleSet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/HeapSizeView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/commands/HeapSizeView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/others/Helper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/IncorrectArgumentException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/exceptions/IncorrectArgumentException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/LicenseChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/commands/LicenseChecker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/menu/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/MenuHeapSize.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/menu/MenuHeapSize.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/MenuRequestPortMassModify.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/menu/MenuRequestPortMassModify.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/MenuRequestPorts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/menu/MenuRequestPorts.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/RequestPortMultipleSet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/RequestPortSingleSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/commands/RequestPortSingleSet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/RequestPortView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/commands/RequestPortView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/Service.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/ServicesChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/commands/ServicesChecker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quicksetcli/UsersAndGroupsChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/quicksetcli/commands/UsersAndGroupsChecker.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,13 +130,17 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "true",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "various__refactoring",
+    "git-widget-placeholder": "fixed__ports__to__FRS",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/Users/Admin/Documents/APPS/Java_JDK/BI42_SP7_jars",
-    "project.structure.last.edited": "Project",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "reference.settings.ide.settings.notifications"
@@ -104,6 +150,11 @@
     <key name="CreateClassDialog.RecentsKey">
       <recent name="quicksetcli" />
       <recent name="" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Admin\Documents\APPS\Java_apps\bi4_test\src\quicksetcli" />
+      <recent name="C:\Users\Admin\Documents\APPS\Java_apps\bi4_test\resources" />
+      <recent name="C:\Users\Admin\Documents\APPS\Java_apps\bi4_test" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="quicksetcli" />
@@ -117,7 +168,7 @@
       <option name="PROGRAM_PARAMETERS" value="-UAdministrator -PPenguin7 -Slinux-1bji:6400 -AsecEnterprise" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="quicksetcli.*" />
+          <option name="PATTERN" value="quicksetcli.menu.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -168,7 +219,7 @@
       <module name="bi4_test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="quicksetcli.*" />
+          <option name="PATTERN" value="quicksetcli.menu.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>

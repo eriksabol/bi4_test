@@ -17,5 +17,6 @@
         <jarDirectory url="file://$MODULE_DIR$/../../Java_JDK/BI42_SP7_jars" recursive="false" />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="me.tongfei.progressbar" level="project" />
   </component>
 </module>

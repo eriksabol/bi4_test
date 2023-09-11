@@ -11,7 +11,6 @@ import java.util.Map;
 public class Service {
 
     private static Service INSTANCE = null;
-
     private ISessionMgr mySessionManager = null;
     private IEnterpriseSession myEnterpriseSession = null;
     private IInfoStore myInfoStore = null;
@@ -39,10 +38,6 @@ public class Service {
 
         return INSTANCE;
 
-    }
-
-    public ISessionMgr getMySessionManager() {
-        return mySessionManager;
     }
 
     public IEnterpriseSession getMyEnterpriseSession() {

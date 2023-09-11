@@ -1,22 +1,23 @@
 package quicksetcli;
 
 import com.crystaldecisions.sdk.exception.SDKException;
+import quicksetcli.exceptions.IncorrectArgumentException;
+import quicksetcli.menu.MenuMain;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
-
-import static quicksetcli.Helper.*;
-import static quicksetcli.Helper.printEmptyLines;
+import java.util.Properties;
 
 public class Main {
 
 //    Windows OS level execution:
 //    C:\Users\Erik\IdeaProjects\Test\out\production\Test>java -Djava.ext.dirs="C:\Users\Erik\Documents\APPS\BI42_SP7_jars" quicksetcli/QuickSetToolNew2 -UAdministrator -Ppassword -Shostname:6400 -AsecEnterprise
 
-    private static Service service = null;
-    private static Boolean searchingStatus = true;
+    private static Service SERVICE = null;
+    private static final Properties PROPERTIES = new Properties();
 
     public static void main(String[] args) {
 
@@ -26,10 +27,22 @@ public class Main {
 
             Map<String, String> credentials = validateArgs(args);
 
+            try (InputStream inputStream = Main.class.getResourceAsStream("/quicksetcli/resources/request_port.properties")) {
+                if (inputStream != null) {
+                    PROPERTIES.load(inputStream);
+                } else {
+                    throw new RuntimeException("Error: 'request_port.properties' not found.");
+                }
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
             System.out.print("Logging on...");
-            service = Service.createServiceSession(credentials);
-            System.out.print("successfully logged on as " + service.getMyEnterpriseSession().getUserInfo().getUserName() + " to " + service.getMyEnterpriseSession().getClusterName() + "\n");
-            displayOptions(service);
+            SERVICE = Service.createServiceSession(credentials);
+            System.out.print("successfully logged on as " + SERVICE.getMyEnterpriseSession().getUserInfo().getUserName() + " to " + SERVICE.getMyEnterpriseSession().getClusterName() + ".\n");
+            MenuMain menuMain = new MenuMain(SERVICE, PROPERTIES);
+            menuMain.view();
 
         } catch (SDKException e) {
 
@@ -37,18 +50,16 @@ public class Main {
 
         } finally {
 
-            if (service != null) {
+            if (SERVICE != null) {
 
-                service.destroyServiceSession();
+                SERVICE.destroyServiceSession();
 
             } else {
 
                 System.out.println("Service session could not be initialized.");
-
             }
 
             System.out.println("Exiting, Good bye.");
-
         }
     }
 
@@ -60,78 +71,7 @@ public class Main {
         System.out.println(String.join("", Collections.nCopies(welcomeLength, "-")));
     }
 
-    public static void displayOptions(Service service) throws SDKException {
-
-        Scanner scanner = new Scanner(System.in);
-
-        while (searchingStatus) {
-
-            displayMainMenu();
-            System.out.print("Enter your choice: ");
-            int userChoice = getIntInput(scanner, 1, 5, null, null);
-
-            switch (userChoice) {
-
-                case 1:
-                    printEmptyLines(1);
-                    MenuRequestPorts menuModifyRequestPort = new MenuRequestPorts(scanner, service);
-                    menuModifyRequestPort.view();
-                    break;
-
-                case 2:
-                    printEmptyLines(1);
-                    MenuHeapSize menuHeapSize = new MenuHeapSize(scanner, service);
-                    menuHeapSize.view();
-                    break;
-
-                case 3:
-                    printEmptyLines(1);
-                    LicenseChecker licenseChecker = new LicenseChecker(service);
-                    licenseChecker.execute();
-                    break;
-
-                case 4:
-                    printEmptyLines(1);
-                    ServicesChecker servicesChecker = new ServicesChecker(service);
-                    servicesChecker.execute();
-                    break;
-
-                case 5:
-                    printEmptyLines(1);
-                    UsersAndGroupsChecker usersAndGroupsChecker = new UsersAndGroupsChecker(service);
-                    usersAndGroupsChecker.execute();
-                    break;
-
-                case -1:
-                    printEmptyLines(1);
-                    scanner.close();
-                    searchingStatus = false;
-                    break;
-            }
-        }
-    }
-
-    private static void displayMainMenu() {
-
-        printEmptyLines(1);
-        System.out.println("Main Menu:");
-        System.out.println("1 Request Ports [+]");
-        System.out.println("2 Heap Size [+]");
-        System.out.println("3 License Key");
-        System.out.println("4 Services");
-        System.out.println("5 Users and Groups");
-        System.out.println("b ← Exit");
-        printEmptyLines(1);
-
-    }
-
     private static boolean validateArgumentsPattern(String[] args) {
-
-        if (args.length != 4) {
-
-            throw new IncorrectArgumentException("Invalid number of arguments -> " + args.length + ". Required number of arguments is 4.");
-
-        }
 
         if ("-U".equals(args[0].substring(0, 2)) && "-P".equals(args[1].substring(0, 2)) && "-S".equals(args[2].substring(0, 2)) && "-A".equals(args[3].substring(0, 2))) {
 
