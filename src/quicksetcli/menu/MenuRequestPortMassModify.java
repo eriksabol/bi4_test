@@ -1,11 +1,9 @@
 package quicksetcli.menu;
 
-import com.crystaldecisions.sdk.plugin.desktop.server.IServer;
-import quicksetcli.others.Constants;
-import quicksetcli.commands.RequestPortMultipleSet;
 import quicksetcli.Service;
+import quicksetcli.commands.RequestPortMultipleSet;
+import quicksetcli.others.Constants;
 
-import java.util.Map;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -14,14 +12,11 @@ import static quicksetcli.others.Helper.printEmptyLines;
 
 public class MenuRequestPortMassModify implements Menu {
     private final Scanner scanner;
-    private final Map<String, IServer> serverMap;
     private final Properties properties;
-
     private final Service service;
 
-    public MenuRequestPortMassModify(Scanner scanner, Map<String, IServer> serverMap, Properties properties, Service service) {
+    public MenuRequestPortMassModify(Scanner scanner, Properties properties, Service service) {
         this.scanner = scanner;
-        this.serverMap = serverMap;
         this.properties = properties;
         this.service = service;
     }
@@ -44,12 +39,12 @@ public class MenuRequestPortMassModify implements Menu {
             switch (requestPortMenuChoice) {
                 case 1:
                     printEmptyLines(1);
-                    RequestPortMultipleSet requestPortMultipleSetAll = new RequestPortMultipleSet(Constants.ALL, scanner, serverMap, properties, service);
+                    RequestPortMultipleSet requestPortMultipleSetAll = new RequestPortMultipleSet(Constants.ALL, scanner, properties, service);
                     requestPortMultipleSetAll.execute();
                     break;
                 case 2:
                     printEmptyLines(1);
-                    RequestPortMultipleSet requestPortMultipleSetAuto = new RequestPortMultipleSet(Constants.ONLY_AUTO, scanner, serverMap, properties, service);
+                    RequestPortMultipleSet requestPortMultipleSetAuto = new RequestPortMultipleSet(Constants.ONLY_AUTO, scanner, properties, service);
                     requestPortMultipleSetAuto.execute();
                     break;
                 case -1:

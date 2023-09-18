@@ -2,8 +2,8 @@ package quicksetcli.commands;
 
 import com.crystaldecisions.sdk.exception.SDKException;
 import com.crystaldecisions.sdk.plugin.desktop.server.IServer;
+import quicksetcli.queries.ServersQuery;
 import quicksetcli.Service;
-import quicksetcli.others.Constants;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -13,13 +13,13 @@ import static quicksetcli.others.Helper.*;
 
 public class HeapSizeView extends BaseCommand {
 
-    private Map<String, IServer> serverMap;
+    private final ServersQuery serversQuery;
 
     public HeapSizeView(Service service) {
-        this.serverMap = initializeServerMap(service, Constants.SERVER_QUERY);
+        this.serversQuery = new ServersQuery(service);
     }
 
-    private void displayHeapSizeTable(Map<String, IServer> serverMap) {
+    private void displayHeapSizeTable(Map<String, IServer> serversMap) {
 
         Map<String, Integer> formatterMap = new LinkedHashMap<>();
         formatterMap.put("ID", 4);
@@ -34,9 +34,9 @@ public class HeapSizeView extends BaseCommand {
         printOverallHeader(formatterMap);
 
         AtomicInteger increment = new AtomicInteger(0);
-        serverMap.keySet().stream()
+        serversMap.keySet().stream()
                 .map(key -> {
-                    IServer server = serverMap.get(key);
+                    IServer server = serversMap.get(key);
                     StringBuffer stringBuffer = new StringBuffer();
 
                     try {
@@ -63,6 +63,6 @@ public class HeapSizeView extends BaseCommand {
 
     @Override
     public void execute() {
-        displayHeapSizeTable(serverMap);
+        displayHeapSizeTable(serversQuery.getServersMap());
     }
 }

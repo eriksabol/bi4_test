@@ -8,6 +8,7 @@ import com.crystaldecisions.sdk.occa.infostore.IInfoObject;
 import com.crystaldecisions.sdk.occa.infostore.IInfoObjects;
 import com.crystaldecisions.sdk.plugin.desktop.server.IServer;
 import me.tongfei.progressbar.ProgressBar;
+import quicksetcli.queries.ServersQuery;
 import quicksetcli.Service;
 import quicksetcli.others.Constants;
 
@@ -21,23 +22,23 @@ public class RequestPortMultipleSet extends BaseCommand {
 
     private final String constant;
     private final Scanner scanner;
-    private final Map<String, IServer> serverMap;
+    private final ServersQuery serversQuery;
     private final Properties properties;
     private final Service service;
 
-    public RequestPortMultipleSet(String constant, Scanner scanner, Map<String, IServer> serverMap, Properties properties, Service service) {
+    public RequestPortMultipleSet(String constant, Scanner scanner, Properties properties, Service service) {
         this.constant = constant;
         this.scanner = scanner;
-        this.serverMap = serverMap;
         this.properties = properties;
         this.service = service;
+        this.serversQuery = new ServersQuery(service);
     }
 
     @Override
     public void execute() {
 
         Map<String, HashSet<Integer>> hostToAvailablePorts = getHostWithAvailablePorts(constant);
-        Map<IServer, Integer> serverWithPort = getServerWithPort(serverMap, hostToAvailablePorts, constant);
+        Map<IServer, Integer> serverWithPort = getServerWithPort(serversQuery.getServersMap(), hostToAvailablePorts, constant);
 
         Map<String, Integer> formatterMap = new LinkedHashMap<>();
         formatterMap.put("serverTitle", 50);
@@ -88,12 +89,11 @@ public class RequestPortMultipleSet extends BaseCommand {
 
                                     serverExecProps.setArgs(modifiedArguments);
                                     currentServer.save();
+                                    progressBar.step();
 
                                 } catch (SDKException e) {
                                     throw new RuntimeException(e);
                                 }
-
-                                progressBar.step();
 
                             });
 
@@ -114,13 +114,13 @@ public class RequestPortMultipleSet extends BaseCommand {
         Map<String, HashSet<Integer>> hostWithAvailablePorts = new HashMap<>();
         Map<String, List<IServer>> hostToServersMap = new HashMap<>();
 
-        for (IServer server : serverMap.values()) {
+        for (IServer server : serversQuery.getServersMap().values()) {
             String host = server.getSIAHostname();
             hostToServersMap.computeIfAbsent(host, value -> new ArrayList<>()).add(server);
         }
 
-        List<Integer> runningPortList = getRunningPorts(serverMap);
-        List<Integer> actualPortList = getActualPorts(serverMap);
+        List<Integer> runningPortList = getRunningPorts(serversQuery.getServersMap());
+        List<Integer> actualPortList = getActualPorts(serversQuery.getServersMap());
         List<Integer> actualPlusRunningList = mergeTwoLists(runningPortList, actualPortList);
 
         HashSet<Integer> actualPlusRunningPorts = new HashSet<>(actualPlusRunningList);

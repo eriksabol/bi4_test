@@ -11,9 +11,9 @@ import java.util.Map;
 public class Service {
 
     private static Service INSTANCE = null;
-    private ISessionMgr mySessionManager = null;
-    private IEnterpriseSession myEnterpriseSession = null;
-    private IInfoStore myInfoStore = null;
+    private ISessionMgr mySessionManager;
+    private IEnterpriseSession myEnterpriseSession;
+    private IInfoStore myInfoStore;
 
     private Service(ISessionMgr sessionMgr, IEnterpriseSession enterpriseSession, IInfoStore infoStore) {
 
@@ -27,17 +27,14 @@ public class Service {
 
         if(INSTANCE == null) {
 
-
             ISessionMgr sessionManager = CrystalEnterprise.getSessionMgr();
             IEnterpriseSession enterpriseSession = sessionManager.logon(credentials.get("username"), credentials.get("password"), credentials.get("system"), credentials.get("authentication"));
             IInfoStore infoStore = (IInfoStore) enterpriseSession.getService("InfoStore");
 
             return new Service(sessionManager, enterpriseSession, infoStore);
-
         }
 
         return INSTANCE;
-
     }
 
     public IEnterpriseSession getMyEnterpriseSession() {
@@ -58,5 +55,4 @@ public class Service {
         System.out.println("Logged off successfully.");
 
     }
-
 }

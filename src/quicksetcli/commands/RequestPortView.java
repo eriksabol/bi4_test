@@ -2,7 +2,8 @@ package quicksetcli.commands;
 
 import com.crystaldecisions.sdk.exception.SDKException;
 import com.crystaldecisions.sdk.plugin.desktop.server.IServer;
-import quicksetcli.commands.BaseCommand;
+import quicksetcli.queries.ServersQuery;
+import quicksetcli.Service;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -12,15 +13,17 @@ import static quicksetcli.others.Helper.*;
 
 public class RequestPortView extends BaseCommand {
 
-    private final Map<String, IServer> serverMap;
+    private final ServersQuery serversQuery;
 
-    public RequestPortView(Map<String, IServer> serverMap) {
-        this.serverMap = serverMap;
+    public RequestPortView(Service service) {
+        this.serversQuery = new ServersQuery(service);
     }
 
     @Override
     public void execute() {
-        displayPortTable(this.serverMap);
+
+        displayPortTable(serversQuery.getServersMap());
+
     }
 
     private void displayPortTable(Map<String, IServer> serverMap) {

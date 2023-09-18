@@ -3,10 +3,9 @@ package quicksetcli.commands;
 import com.businessobjects.sdk.plugin.desktop.common.IExecProps;
 import com.crystaldecisions.sdk.exception.SDKException;
 import com.crystaldecisions.sdk.plugin.desktop.server.IServer;
-import quicksetcli.others.Constants;
+import quicksetcli.queries.ServersQuery;
 import quicksetcli.Service;
 
-import java.util.Map;
 import java.util.Scanner;
 
 import static quicksetcli.others.Helper.*;
@@ -14,25 +13,22 @@ import static quicksetcli.others.Helper.*;
 public class HeapSizeSingleSet extends BaseCommand {
 
     private final Scanner scanner;
-    private Map<String, IServer> serverMap;
-    private Service service;
+    private final ServersQuery serversQuery;
 
     public HeapSizeSingleSet(Scanner scanner, Service service) {
         this.scanner = scanner;
-        this.service = service;
-        this.serverMap = initializeServerMap(service, Constants.SERVER_QUERY);
+        this.serversQuery = new ServersQuery(service);
     }
-
 
     @Override
     public void execute() {
 
         System.out.print("Choose Server ID: ");
-        int serverID = getIntInput(scanner, 0, serverMap.size() - 1, null, null);
+        int serverID = getIntInput(scanner, 0, serversQuery.getServersMap().size() - 1, null, null);
 
-        Object[] serverArray = serverMap.keySet().toArray();
+        Object[] serverArray = serversQuery.getServersMap().keySet().toArray();
         String key = (String) serverArray[serverID];
-        IServer selectedServer = serverMap.get(key);
+        IServer selectedServer = serversQuery.getServersMap().get(key);
 
         String serverName = selectedServer.getTitle();
         System.out.println("Server Name: " + serverName);

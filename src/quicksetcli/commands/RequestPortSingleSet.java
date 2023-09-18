@@ -3,9 +3,10 @@ package quicksetcli.commands;
 import com.businessobjects.sdk.plugin.desktop.common.IExecProps;
 import com.crystaldecisions.sdk.exception.SDKException;
 import com.crystaldecisions.sdk.plugin.desktop.server.IServer;
+import quicksetcli.queries.ServersQuery;
+import quicksetcli.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 import static quicksetcli.others.Helper.*;
@@ -13,22 +14,22 @@ import static quicksetcli.others.Helper.*;
 public class RequestPortSingleSet extends BaseCommand {
 
     private final Scanner scanner;
-    private final Map<String, IServer> serverMap;
+    private final ServersQuery serverMap;
 
-    public RequestPortSingleSet(Scanner scanner, Map<String, IServer> serverMap) {
+    public RequestPortSingleSet(Scanner scanner, Service service) {
         this.scanner = scanner;
-        this.serverMap = serverMap;
+        this.serverMap = new ServersQuery(service);
     }
 
     @Override
     public void execute() {
 
         System.out.print("Choose Server ID: ");
-        int serverID = getIntInput(scanner, 0, serverMap.size() - 1, null, null);
+        int serverID = getIntInput(scanner, 0, serverMap.getServersMap().size() - 1, null, null);
 
-        Object[] serverArray = serverMap.keySet().toArray();
+        Object[] serverArray = serverMap.getServersMap().keySet().toArray();
         String key = (String) serverArray[serverID];
-        IServer selectedServer = serverMap.get(key);
+        IServer selectedServer = serverMap.getServersMap().get(key);
 
         String serverName = selectedServer.getTitle();
         System.out.println("Server Name: " + serverName);
@@ -39,8 +40,8 @@ public class RequestPortSingleSet extends BaseCommand {
         String actualRequestPort = getActualPort(selectedServer);
         System.out.println("Actual Request Port: " + actualRequestPort);
 
-        List<Integer> runningPorts = getRunningPorts(serverMap);
-        List<Integer> actualPorts = getActualPorts(serverMap);
+        List<Integer> runningPorts = getRunningPorts(serverMap.getServersMap());
+        List<Integer> actualPorts = getActualPorts(serverMap.getServersMap());
 
         System.out.print("Choose new Request Port [6401-6499]: ");
         int newRequestPort = getIntInput(scanner, 6401, 6499,
